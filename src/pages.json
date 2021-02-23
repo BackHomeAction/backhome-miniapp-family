@@ -1,0 +1,65 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      // uni-ui 规则如下配置
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
+  },
+  "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    }, {
+      "path": "pages/me/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "归家行动家属端",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#f0f2f5"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#000000",
+    "backgroundColor": "#F8F8F8",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "报案",
+      "iconPath": "static/images/tabbar/home.png",
+      "selectedIconPath": "static/images/tabbar/home-active.png"
+    }, {
+      "pagePath": "pages/me/index",
+      "text": "我的",
+      "iconPath": "static/images/tabbar/user.png",
+      "selectedIconPath": "static/images/tabbar/user-active.png"
+    }]
+  },
+  "condition": { //模式配置，仅开发期间生效
+    "current": 0, //当前激活的模式（list 的索引项）
+    "list": [{
+        "name": "首页",
+        "path": "pages/index/index"
+      },
+      {
+        "name": "个人页",
+        "path": "pages/me/index",
+        "query": ""
+      }, {
+        "name": "修改个人信息",
+        "path": "pages/editProfile/index",
+        "query": ""
+      }, {
+        "name": "修改手机号",
+        "path": "pages/editPhoneNumber/index",
+        "query": ""
+      }
+    ]
+  }
+}
