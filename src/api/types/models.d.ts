@@ -43,6 +43,7 @@ export interface Case {
   city?: string; // 市
   distance?: number; // 案件发生地距自己的距离
   district?: string; // 区
+  family?: Family; // 家属
   familyId?: number; // 家属ID
   id?: number; // 案件ID
   latitude?: number; // 走失点纬度
@@ -74,7 +75,7 @@ export interface Face {
   volunteerId?: number; // 志愿者ID
 }
 export interface FaceIdentification {
-  caseId?: number; // 案件ID
+  caseId?: string; // 案件ID
   imgUrl?: string; // 照片地址
 }
 export interface Family {
@@ -86,6 +87,7 @@ export interface Family {
   nickName?: string; // 昵称
   phone?: string; // 手机号
   province?: string; // 省份
+  registerTime?: string; // 注册时间
   sex?: number; // 性别
   state?: number; // 账号状态
 }
@@ -94,7 +96,6 @@ export interface FamilyAvatarUrl {
 }
 export interface FamilyInformation {
   code?: string; // 短信验证码
-  name?: string; // 姓名
   phone?: string; // 手机号
 }
 export interface FamilyLoginCode {

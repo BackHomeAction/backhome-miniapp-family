@@ -16,6 +16,7 @@ export interface RootState {
 export interface UserState {
   logged: boolean;
   userInfo?: null | Family;
+  hasFamilyInfo: boolean;
 }
 
 export interface AvatarCropperState {
@@ -52,7 +53,6 @@ export interface ICurrentMission {
 export interface MissionState {
   myMissions: Array<Case>;
   myMissionIDs: Set<number>;
-  myUncheckedMissions: Array<Case>;
   myAllMissions: Array<Case>;
   currentMission: ICurrentMission;
 }

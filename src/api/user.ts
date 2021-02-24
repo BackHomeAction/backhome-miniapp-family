@@ -71,17 +71,33 @@ export const requestBindPhone = (params: FamilyInformation) => {
 };
 
 /**
- * 更新个人信息
+ * 修改个人信息
  *
- * @param {FamilyInformation} params
+ * @param {{
+ *   avatarUrl?: string;
+ *   city?: string;
+ *   country?: string;
+ *   name?: string;
+ *   nickName?: string;
+ *   province?: string;
+ *   sex?: number;
+ * }} params
  * @return {*}
  */
-export const requestUpdateInformation = (params: FamilyInformation) => {
+export const requestUpdateInformation = (data: {
+  avatarUrl?: string;
+  city?: string;
+  country?: string;
+  name?: string;
+  nickName?: string;
+  province?: string;
+  sex?: number;
+}) => {
   return http.request<ResponseData<object>>({
-    url: `family/phone`,
+    url: `family/info`,
     method: "PUT",
     params: {},
-    data: params,
+    data: data,
   });
 };
 

@@ -17,6 +17,11 @@
       "style": {
         "navigationStyle": "custom"
       }
+    }, {
+      "path": "pages/register/index",
+      "style": {
+        "navigationBarTitleText": "完善个人信息"
+      }
     }
   ],
   "globalStyle": {

@@ -14,6 +14,7 @@ const user: Module<UserState, RootState> = {
   state: {
     logged: false,
     userInfo: null,
+    hasFamilyInfo: false,
   },
 
   mutations: {
@@ -23,6 +24,7 @@ const user: Module<UserState, RootState> = {
     },
     [MutationTypes.SET_USER_INFO]: (state, userInfo: typeof state.userInfo) => {
       state.userInfo = userInfo;
+      state.hasFamilyInfo = userInfo?.name !== null && userInfo?.phone !== null;
       console.debug(state);
     },
   },
@@ -78,6 +80,7 @@ const user: Module<UserState, RootState> = {
   getters: {
     logged: (state) => state.logged,
     userInfo: (state) => state.userInfo,
+    hasFamilyInfo: (state) => state.hasFamilyInfo,
   },
 };
 

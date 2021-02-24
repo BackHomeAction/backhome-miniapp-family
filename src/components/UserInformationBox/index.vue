@@ -36,8 +36,7 @@
           v-if="status === 'unlogin'"
           class="action-btn"
           hover-class="none"
-          open-type="getUserInfo"
-          @getuserinfo="handleLogin"
+          @click="handleLogin"
         >
           <view class="action-btn-text">
             去登录
@@ -192,58 +191,27 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  Ref,
-  defineComponent,
-  PropType,
-  ref,
-  ComputedRef,
-} from "vue";
+import { computed, defineComponent, PropType, ComputedRef } from "vue";
 import authService from "@/service/authService";
 import dayjs from "@/utils/dayjs";
 import { navigateTo } from "@/utils/helper";
 import UCountTo from "../UCountTo/index.vue";
 import { Case, Family } from "@/api/types/models";
-import { requestGetVolunteerCases } from "@/api/mission";
 import { useStore } from "vuex";
 
 const useLogin = () => {
-  const handleLogin = (res: any) => {
-    authService.login(true, res);
+  const handleLogin = () => {
+    authService.login(true);
   };
 
   return { handleLogin };
 };
 
-const useHistory = (status: "unlogin" | "me" | "user", info: any) => {
+const useHistory = () => {
   const store = useStore();
-  let userHistoryMissions: Ref<Array<Case>> = ref([]);
-
-  const getHistoryMissions = async () => {
-    if (status === "user" && (!info.volunteer || !info.volunteer.id)) return;
-
-    try {
-      const res = await requestGetVolunteerCases({
-        volunteerId: info.volunteer.id,
-      });
-      if (res.data.data) {
-        userHistoryMissions.value = res.data.data;
-      }
-      console.debug(res);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  if (status === "user") {
-    getHistoryMissions();
-  }
 
   const historyMissions: ComputedRef<Array<Case>> = computed(() => {
-    return status === "me"
-      ? store.getters.myAllMissions.reverse()
-      : userHistoryMissions.value.reverse();
+    return store.getters.myAllMissions.reverse();
   });
 
   const doingMissionsNumber = computed(() => {
@@ -290,8 +258,7 @@ export default defineComponent({
     });
 
     const registerTimeFromNow = computed(() => {
-      // const time = props?.userInfo?.registerTime;
-      const time = "2021-02-23 23:00:00";
+      const time = props?.userInfo?.registerTime;
 
       return dayjs(time).fromNow(true);
     });
@@ -324,7 +291,7 @@ export default defineComponent({
       phone,
       handleEditProfile,
       handleClickPhone,
-      ...useHistory(props.status, props.userInfo),
+      ...useHistory(),
     };
   },
 });

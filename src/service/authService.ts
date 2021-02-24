@@ -13,43 +13,34 @@ import {
 import tim from "@/utils/tim";
 import { startWebsocket, stopWebsocket } from "./websocketService";
 
-const login = async (triggeredByButton = false, userInfoRes?: any) => {
+const login = async (triggeredByButton = false) => {
   showLoading("登录中");
   await store.dispatch(ActionTypes.login);
   await getUserInfo(); //获取个人信息
-  if (store.getters.userInfo.avatarUrl === null && userInfoRes) {
-    // 如果没有头像信息，就用微信的信息初始化用户信息，之后再次获取
-    const userInfo: UniApp.GetUserInfoRes = userInfoRes.detail;
-    await requestUpdateWechatUserInfo({
-      encryptedData: userInfo.encryptedData,
-      iv: userInfo.iv,
-    });
-    await getUserInfo();
-  }
   await requestLocationPermission(); // 申请定位权限
   await loginTIM(); // 登录 IM
 
-  if (store.getters.hasVolunteerInfo) {
+  if (store.getters.hasFamilyInfo) {
     showToast("登录成功", "success");
     try {
       checkPermissions(triggeredByButton); // 检查权限
       // 启动 WebSocket 服务
       startWebsocket();
       // 获取我的任务
-      // store.dispatch(ActionTypes.getMyUncheckedMissions);
-      // store.dispatch(ActionTypes.getMyMissions);
+      store.dispatch(ActionTypes.getMyMissions);
+      store.dispatch(ActionTypes.getMyAllMissions);
     } catch (e) {
       console.log(e);
     }
   } else {
     hideLoading();
-    // if (store.getters.userInfo.phone) {
-    //   // 如果已绑定手机，则直接进入绑定个人信息页面
-    //   navigateTo("/pages/register/index?step=2");
-    // } else {
-    //   // 如果否则先绑定手机
-    //   navigateTo("/pages/register/index");
-    // }
+    if (store.getters.userInfo.phone) {
+      // 如果已绑定手机，则直接进入绑定个人信息页面
+      navigateTo("/pages/register/index?step=2");
+    } else {
+      // 如果否则先绑定手机
+      navigateTo("/pages/register/index");
+    }
   }
 };
 

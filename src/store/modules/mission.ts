@@ -1,24 +1,19 @@
-import { Case } from "@/api/types/models";
 import { Module } from "vuex";
 import { MissionState, RootState } from "../types";
 import { MutationTypes } from "@/enums/mutationTypes";
 import { ActionTypes } from "@/enums/actionTypes";
 import {
-  requestAcceptCase,
   requestGetCases,
   requestGetFaceIdentificationRecords,
   requestGetMyCases,
-  requestGetMyUncheckedCases,
-  requestGetVolunteerCases,
+  requestGetMyAllCases,
   requestGetVolunteersInCase,
-  requestRefuseCase,
 } from "@/api/mission";
 
 const Mission: Module<MissionState, RootState> = {
   state: {
     myMissions: [],
     myMissionIDs: new Set(),
-    myUncheckedMissions: [],
     myAllMissions: [],
     currentMission: {
       missionInfo: null,
@@ -46,13 +41,6 @@ const Mission: Module<MissionState, RootState> = {
       myAllMissions: typeof state.myAllMissions
     ) => {
       state.myAllMissions = myAllMissions;
-      console.debug(state);
-    },
-    [MutationTypes.SET_MY_UNCHECKED_MISSIONS]: (
-      state,
-      myUncheckedMissions: typeof state.myUncheckedMissions
-    ) => {
-      state.myUncheckedMissions = myUncheckedMissions;
       console.debug(state);
     },
     [MutationTypes.SET_CURRENT_MISSION]: (
@@ -161,71 +149,10 @@ const Mission: Module<MissionState, RootState> = {
         try {
           if (!rootState.user.userInfo?.id) return;
 
-          const res = await requestGetVolunteerCases({
-            volunteerId: rootState.user.userInfo.id,
-          });
+          const res = await requestGetMyAllCases();
           if (res.data.data) {
             commit(MutationTypes.SET_MY_ALL_MISSIONS, res.data.data);
           }
-          resolve();
-        } catch (e) {
-          console.log(e);
-          reject();
-        }
-      });
-    },
-    [ActionTypes.getMyUncheckedMissions]: ({ commit }) => {
-      return new Promise<void>(async (resolve, reject) => {
-        try {
-          const res = await requestGetMyUncheckedCases();
-          if (res.data.data) {
-            commit(MutationTypes.SET_MY_UNCHECKED_MISSIONS, res.data.data);
-          }
-          resolve();
-        } catch (e) {
-          console.log(e);
-          reject();
-        }
-      });
-    },
-    [ActionTypes.acceptMission]: (
-      { dispatch },
-      params: { item: Case; equipment: 1 | 2; traffic: string }
-    ) => {
-      return new Promise<void>(async (resolve, reject) => {
-        try {
-          if (!params.item.id) return;
-
-          await requestAcceptCase({
-            caseId: params.item.id,
-            equipment: params.equipment,
-            traffic: params.traffic,
-          });
-          // 刷新案件列表
-          await Promise.all([
-            dispatch(ActionTypes.getMyUncheckedMissions),
-            dispatch(ActionTypes.getMyMissions),
-          ]);
-          resolve();
-        } catch (e) {
-          console.log(e);
-          reject();
-        }
-      });
-    },
-    [ActionTypes.refuseMission]: ({ dispatch }, params: { item: Case }) => {
-      return new Promise<void>(async (resolve, reject) => {
-        try {
-          if (!params.item.id) return;
-
-          await requestRefuseCase({
-            caseId: params.item.id,
-          });
-          // 刷新案件列表
-          await Promise.all([
-            dispatch(ActionTypes.getMyUncheckedMissions),
-            dispatch(ActionTypes.getMyMissions),
-          ]);
           resolve();
         } catch (e) {
           console.log(e);
@@ -341,7 +268,6 @@ const Mission: Module<MissionState, RootState> = {
   getters: {
     myMissions: (state) => state.myMissions,
     myMissionIDs: (state) => state.myMissionIDs,
-    myUncheckedMissions: (state) => state.myUncheckedMissions,
     myAllMissions: (state) => state.myAllMissions,
     currentMission: (state) => state.currentMission,
   },

@@ -36,7 +36,7 @@ export default defineComponent({
     return {};
   },
   onShow() {
-    store.dispatch(ActionTypes.getCount);
+    // store.dispatch(ActionTypes.getCount);
   },
 });
 </script>
