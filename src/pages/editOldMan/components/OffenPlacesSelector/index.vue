@@ -52,10 +52,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.body {
-  padding-bottom: 16rpx;
-}
-
 .item {
   display: flex;
   align-items: center;

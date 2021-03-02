@@ -117,6 +117,7 @@
       </u-form-item>
       <u-form-item
         label="常去地点"
+        border-bottom
       >
         <offen-places-selector
           :value="form.offenPlaces"
