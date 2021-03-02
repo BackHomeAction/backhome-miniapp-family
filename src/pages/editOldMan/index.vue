@@ -31,7 +31,6 @@
               :photos="form.lifePhoto"
               :max-upload="8"
               label="添加其他照片"
-              style="margin-left: 32rpx;"
               @change="handleLifePhotoUploaded"
             />
           </view>
@@ -254,6 +253,7 @@ const form: IForm = reactive({
   disability: "",
   otherFeature: "",
   other: "",
+  // TODO: Remove this
   identificationPhoto:
     "https://home-action.oss-cn-shanghai.aliyuncs.com/family/13/3d011064-a9fd-4675-bb28-58c022477445.jpg",
   lifePhoto: [

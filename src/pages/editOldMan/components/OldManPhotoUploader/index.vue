@@ -107,6 +107,7 @@ export default defineComponent({
 .body {
   box-sizing: border-box;
   padding-top: 22rpx;
+  padding-right: 32rpx;
   display: inline-flex;
 }
 
