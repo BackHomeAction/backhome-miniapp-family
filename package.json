@@ -64,6 +64,7 @@
     "flyio": "^0.6.2",
     "gcoord": "^0.2.3",
     "husky": "^4.3.8",
+    "mitt": "^2.1.0",
     "regenerator-runtime": "^0.12.1",
     "tim-upload-plugin": "^1.0.1",
     "tim-wx-sdk": "^2.9.3",

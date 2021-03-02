@@ -4,10 +4,7 @@ import Ws from "../utils/websocket";
 export interface RootState {
   version?: string;
   user: UserState;
-  avatarCropper: AvatarCropperState;
   announcement: AnnouncementState;
-  location: LocationState;
-  common: CommonState;
   mission: MissionState;
   websocket: WebsocketState;
   tim: TimState;
@@ -19,28 +16,9 @@ export interface UserState {
   hasFamilyInfo: boolean;
 }
 
-export interface AvatarCropperState {
-  path: string;
-}
-
 export interface AnnouncementState {
   announcements: Array<Notice>;
   banners: Array<Banner>;
-}
-
-export interface LocationState {
-  location: {
-    longitude: number;
-    latitude: number;
-  };
-}
-
-export interface CommonState {
-  count: {
-    onlineVolunteerNumber: number;
-    totalVolunteerNumber: number;
-    openingTaskNumber: number;
-  };
 }
 
 export interface ICurrentMission {

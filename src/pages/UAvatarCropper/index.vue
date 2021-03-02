@@ -61,8 +61,7 @@
 <script>
 import { navigateBack, showToast } from "@/utils/helper";
 import WeCropper from "./weCropper.js";
-import store from "@/store";
-import { MutationTypes } from "@/enums/mutationTypes";
+import bus from "@/utils/bus";
 
 export default {
   props: {
@@ -228,8 +227,7 @@ export default {
               urls: [path], // 需要预览的图片 http 链接列表
             });
           } else {
-            // uni.$emit("uAvatarCropper", path);
-            store.commit(MutationTypes.SET_AVATAR_PATH, path);
+            bus.emit("uAvatarCropper", path);
             navigateBack();
           }
         }
