@@ -6,6 +6,7 @@
         icon="/static/images/home/add.png"
         name="我的老人"
         description="在这里完善老人的详细信息"
+        path="/pages/myOldMans/index"
       />
       <index-item
         icon="/static/images/home/report.png"
@@ -27,17 +28,13 @@
 import { defineComponent } from "vue";
 import Top from "./components/Top/index.vue";
 import IndexItem from "./components/IndexItem/index.vue";
-import store from "@/store";
-import { ActionTypes } from "@/enums/actionTypes";
 
 export default defineComponent({
   components: { Top, IndexItem },
   setup() {
     return {};
   },
-  onShow() {
-    // store.dispatch(ActionTypes.getCount);
-  },
+  onShow() {},
 });
 </script>
 

@@ -43,6 +43,16 @@
       "style": {
         "navigationBarTitleText": "设置订阅"
       }
+    }, {
+      "path": "pages/myOldMans/index",
+      "style": {
+        "navigationBarTitleText": "我的老人信息"
+      }
+    }, {
+      "path": "pages/editOldMan/index",
+      "style": {
+        "navigationBarTitleText": "" // 添加/编辑老人，动态设置标题
+      }
     }
   ],
   "globalStyle": {
@@ -84,6 +94,14 @@
       }, {
         "name": "修改手机号",
         "path": "pages/editPhoneNumber/index",
+        "query": ""
+      }, {
+        "name": "我的老人信息",
+        "path": "pages/myOldMans/index",
+        "query": ""
+      }, {
+        "name": "新增老人信息",
+        "path": "pages/editOldMan/index",
         "query": ""
       }
     ]

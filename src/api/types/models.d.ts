@@ -18,6 +18,7 @@ export interface Admin {
   id?: number; // 管理员ID
   password?: string;
   province?: string; // 管理员管辖区所在省
+  registerTime?: string; // 注册时间
   role?: string; // 管理员角色
   roleId?: number; // 管理员角色ID
   userName?: string;
@@ -82,6 +83,7 @@ export interface Family {
   avatarUrl?: string; // 头像
   city?: string; // 城市
   country?: string; // 国家
+  district?: string; // 区
   id?: number; // 家属ID
   name?: string; // 姓名
   nickName?: string; // 昵称
@@ -123,6 +125,7 @@ export interface OldMan {
   address?: string; // 详细地址
   birthDate?: string; // 出生日期
   city?: string; // 城市
+  createdAt?: string; // 创建时间
   disability?: string; // 残疾信息
   district?: string; // 区
   familyId?: number; // 家属ID
@@ -140,6 +143,7 @@ export interface OldMan {
   province?: string; // 省份
   senileDementia?: number; // 是否老年痴呆
   sex?: number; // 性别
+  updatedAt?: string; // 修改时间
   weight?: number; // 体重
 }
 export interface Timestamp {
@@ -153,6 +157,10 @@ export interface Timestamp {
   time?: number;
   timezoneOffset?: number;
   year?: number;
+}
+export interface UpdatePassword {
+  newPassword?: string; // 新密码
+  oldPassword?: string; // 旧密码
 }
 export interface Volunteer {
   avatarUrl?: string; // 头像
