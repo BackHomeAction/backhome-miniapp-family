@@ -22,6 +22,22 @@
       "style": {
         "navigationBarTitleText": "完善个人信息"
       }
+    }, {
+      "path": "pages/editProfile/index",
+      "style": {
+        "navigationBarTitleText": "修改个人信息"
+      }
+    }, {
+      "path": "pages/editPhoneNumber/index",
+      "style": {
+        "navigationBarTitleText": "修改手机号"
+      }
+    }, {
+      "path": "pages/UAvatarCropper/index",
+      "style": {
+        "navigationBarTitleText": "头像上传",
+        "navigationBarBackgroundColor": "#000000"
+      }
     }
   ],
   "globalStyle": {
