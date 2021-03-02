@@ -38,6 +38,11 @@
         "navigationBarTitleText": "头像上传",
         "navigationBarBackgroundColor": "#000000"
       }
+    }, {
+      "path": "pages/requestSubscribeMessage/index",
+      "style": {
+        "navigationBarTitleText": "设置订阅"
+      }
     }
   ],
   "globalStyle": {
