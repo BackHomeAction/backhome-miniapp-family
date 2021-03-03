@@ -28,6 +28,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { navigateTo } from "@/utils/helper";
+import { useStore } from "vuex";
+import authService from "@/service/authService";
 
 export default defineComponent({
   props: {
@@ -51,12 +53,24 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    skipRegister: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
-    function handleClick() {
-      // TODO: check login
+    const store = useStore();
+
+    async function handleClick() {
       if (props.path) {
-        navigateTo(props.path);
+        if (props.needLogin) {
+          if (store.getters.logged) {
+            navigateTo(props.path);
+          } else {
+            await authService.login(!props.skipRegister);
+            navigateTo(props.path);
+          }
+        }
       }
     }
     return { handleClick };

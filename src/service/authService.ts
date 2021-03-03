@@ -20,28 +20,33 @@ const login = async (triggeredByButton = false) => {
   await requestLocationPermission(); // 申请定位权限
   await loginTIM(); // 登录 IM
 
-  if (store.getters.hasFamilyInfo) {
-    showToast("登录成功", "success");
-    try {
+  showToast("登录成功", "success");
+  try {
+    if (triggeredByButton) {
       checkPermissions(triggeredByButton); // 检查权限
-      // 启动 WebSocket 服务
-      startWebsocket();
-      // 获取我的任务
-      store.dispatch(ActionTypes.getMyMissions);
-      store.dispatch(ActionTypes.getMyAllMissions);
-      // 获取我的老人
-      store.dispatch(ActionTypes.getOldmanList);
-    } catch (e) {
-      console.log(e);
     }
-  } else {
-    hideLoading();
-    if (store.getters.userInfo.phone) {
-      // 如果已绑定手机，则直接进入绑定个人信息页面
-      navigateTo("/pages/register/index?step=2");
-    } else {
-      // 如果否则先绑定手机
-      navigateTo("/pages/register/index");
+    // 启动 WebSocket 服务
+    startWebsocket();
+    // 获取我的任务
+    store.dispatch(ActionTypes.getMyMissions);
+    store.dispatch(ActionTypes.getMyAllMissions);
+    // 获取我的老人
+    store.dispatch(ActionTypes.getOldmanList);
+  } catch (e) {
+    console.log(e);
+  }
+  hideLoading();
+
+  console.log(store.getters.hasFamilyInfo);
+  if (!store.getters.hasFamilyInfo) {
+    if (triggeredByButton) {
+      if (store.getters.userInfo.phone) {
+        // 如果已绑定手机，则直接进入绑定个人信息页面
+        navigateTo("/pages/register/index?step=2");
+      } else {
+        // 如果否则先绑定手机
+        navigateTo("/pages/register/index");
+      }
     }
   }
 };
