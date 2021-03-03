@@ -94,6 +94,7 @@
         <u-picker
           mode="date"
           :value="form.birthday"
+          :select-value="form.birthday"
           placeholder="请选择出生日期"
           @change="handleBirthdayChange"
         />
@@ -105,6 +106,7 @@
         <u-picker
           mode="region"
           :value="regionText"
+          :select-value="regionArray"
           placeholder="请选择居住地区"
           @change="handleRegionChange"
         />
@@ -188,9 +190,10 @@ import OldManPhotoUploader from "./components/OldManPhotoUploader/index.vue";
 import { IPlace } from "@/enums/placeTypes";
 import mapSettings from "@/config/map";
 import { showModalError, showToast, navigateBack } from "@/utils/helper";
-import { requestAddOldMan } from "@/api/oldman";
+import { requestAddOldMan, requestEditOldMan } from "@/api/oldman";
 import store from "@/store";
 import { ActionTypes } from "@/enums/actionTypes";
+import { OldMan } from "@/api/types/models";
 
 const oldmanId = ref(0);
 
@@ -238,7 +241,7 @@ interface IPostForm {
 
 const form: IForm = reactive({
   name: "",
-  phone: "", // TODO: 新增老人时，自动获取本账号手机号
+  phone: "",
   idcard: "",
   sex: 0,
   height: "",
@@ -298,6 +301,14 @@ const useAddress = () => {
       : "";
   });
 
+  const regionArray = computed(() => {
+    const province = form.province;
+    const city = form.city;
+    const district = form.district;
+
+    return [province, city, district];
+  });
+
   const handleRegionChange = (e: any) => {
     const value = e.detail.value;
 
@@ -306,7 +317,7 @@ const useAddress = () => {
     form.district = value[2];
   };
 
-  return { regionText, handleRegionChange };
+  return { regionText, regionArray, handleRegionChange };
 };
 
 const useOffenPlaces = () => {
@@ -427,7 +438,11 @@ const handleSubmit = async () => {
 
   isSaving.value = true;
   try {
-    await requestAddOldMan(postForm);
+    if (oldmanId.value) {
+      await requestEditOldMan({ id: oldmanId.value, ...postForm });
+    } else {
+      await requestAddOldMan(postForm);
+    }
     await store.dispatch(ActionTypes.getOldmanList);
     showToast("保存成功", "success");
     navigateBack();
@@ -476,18 +491,66 @@ export default defineComponent({
     }
   },
   onLoad(params: { id: string }) {
+    form.name = "";
+    form.phone = "";
+    form.idcard = "";
+    form.sex = 0;
+    form.height = "";
+    form.weight = "";
+    form.birthday = "";
+    form.province = "";
+    form.city = "";
+    form.district = "";
+    form.address = "";
+    form.offenPlaces = [];
+    form.senileDementia = 2;
+    form.disability = "";
+    form.otherFeature = "";
+    form.other = "";
+    form.identificationPhoto = "";
+    form.lifePhoto = [];
+
     if (params.id) {
       // edit
       oldmanId.value = parseInt(params.id, 10);
       uni.setNavigationBarTitle({
         title: "编辑老人",
       });
+
+      const oldman = store.getters.oldmanList.find(
+        (oldman: OldMan) => oldman.id === parseInt(params.id)
+      );
+      console.debug(oldman);
+
+      form.name = oldman.name;
+      form.phone = oldman.phone;
+      form.idcard = oldman.idcard;
+      form.sex = oldman.sex;
+      form.height = oldman.height.toString();
+      form.weight = oldman.weight.toString();
+      form.birthday = oldman.birthDate;
+      form.province = oldman.province;
+      form.city = oldman.city;
+      form.district = oldman.district;
+      form.address = oldman.address;
+      form.offenPlaces = JSON.parse(oldman.offerPlace);
+      form.senileDementia = oldman.senileDementia;
+      form.disability = oldman.disability;
+      form.otherFeature = oldman.otherFeature;
+      form.other = oldman.other;
+      form.identificationPhoto = oldman.identificationPhoto;
+      form.lifePhoto = JSON.parse(oldman.lifePhoto);
     } else {
       // new
       oldmanId.value = 0;
       uni.setNavigationBarTitle({
         title: "添加老人",
       });
+
+      // 置入手机号
+      if (store.getters.userInfo.phone) {
+        form.phone = store.getters.userInfo.phone;
+      }
     }
   },
   onUnload() {

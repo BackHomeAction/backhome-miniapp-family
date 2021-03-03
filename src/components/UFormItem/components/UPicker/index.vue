@@ -4,6 +4,7 @@
     :range="range"
     :range-key="rangeKey"
     :disabled="disabled"
+    :value="selectValue"
     @change="handleChange"
     @cancel="handleCancel"
   >
@@ -50,6 +51,10 @@ export default defineComponent({
     value: {
       type: String,
       default: "",
+    },
+    selectValue: {
+      type: [String, Array],
+      default: null,
     },
     placeholder: {
       type: String,
