@@ -10,15 +10,15 @@
     />
     <view class="item-info">
       <view class="item-info-first">
-        <view class="item-info-first-address">
-          111
-        </view>
-        <view class="item-info-first-distance">
-          222
+        <view class="item-info-first-name">
+          {{ data.name }}
         </view>
       </view>
-      <view class="item-info-second">
-        333
+      <view
+        v-if="data.updatedAt"
+        class="item-info-second"
+      >
+        上次修改于：{{ data.updatedAt }}
       </view>
     </view>
   </view>
@@ -79,20 +79,14 @@ export default defineComponent({
 
     &-first {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
+      justify-content: center;
       min-width: 280rpx;
 
-      &-address {
+      &-name {
         font-size: 24rpx;
         color: #000000;
         line-height: 34rpx;
-      }
-
-      &-distance {
-        font-size: 18rpx;
-        color: #979797;
-        line-height: 26rpx;
+        letter-spacing: 1rpx;
       }
     }
 

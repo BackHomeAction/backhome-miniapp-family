@@ -29,6 +29,8 @@ const login = async (triggeredByButton = false) => {
       // 获取我的任务
       store.dispatch(ActionTypes.getMyMissions);
       store.dispatch(ActionTypes.getMyAllMissions);
+      // 获取我的老人
+      store.dispatch(ActionTypes.getOldmanList);
     } catch (e) {
       console.log(e);
     }

@@ -73,6 +73,7 @@
       >
         <u-input
           v-model="form.height"
+          type="number"
           placeholder="请输入老人身高 (cm)"
         />
       </u-form-item>
@@ -82,6 +83,7 @@
       >
         <u-input
           v-model="form.weight"
+          type="number"
           placeholder="请输入老人体重 (kg)"
         />
       </u-form-item>
@@ -185,13 +187,10 @@ import OffenPlacesSelector from "./components/OffenPlacesSelector/index.vue";
 import OldManPhotoUploader from "./components/OldManPhotoUploader/index.vue";
 import { IPlace } from "@/enums/placeTypes";
 import mapSettings from "@/config/map";
-import {
-  showModalError,
-  showToast,
-  showLoading,
-  hideLoading,
-} from "@/utils/helper";
+import { showModalError, showToast, navigateBack } from "@/utils/helper";
 import { requestAddOldMan } from "@/api/oldman";
+import store from "@/store";
+import { ActionTypes } from "@/enums/actionTypes";
 
 const oldmanId = ref(0);
 
@@ -254,12 +253,8 @@ const form: IForm = reactive({
   disability: "",
   otherFeature: "",
   other: "",
-  // TODO: Remove this
-  identificationPhoto:
-    "https://home-action.oss-cn-shanghai.aliyuncs.com/family/13/3d011064-a9fd-4675-bb28-58c022477445.jpg",
-  lifePhoto: [
-    "https://home-action.oss-cn-shanghai.aliyuncs.com/family/13/3d011064-a9fd-4675-bb28-58c022477445.jpg",
-  ],
+  identificationPhoto: "",
+  lifePhoto: [],
 });
 
 const useSex = () => {
@@ -433,8 +428,9 @@ const handleSubmit = async () => {
   isSaving.value = true;
   try {
     await requestAddOldMan(postForm);
-    // TODO: await get oldman list
-    // TODO: navigate back
+    await store.dispatch(ActionTypes.getOldmanList);
+    showToast("保存成功", "success");
+    navigateBack();
   } catch (e) {
     console.log(e);
   }

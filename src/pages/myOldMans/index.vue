@@ -12,21 +12,34 @@
 
 <script lang="ts">
 import { OldMan } from "@/api/types/models";
-import { defineComponent } from "vue";
+import { computed, ComputedRef, defineComponent } from "vue";
 import Item from "./components/Item/index.vue";
 import Add from "./components/Add/index.vue";
-
-const oldmanList: Array<OldMan> = [];
+import { useStore } from "vuex";
+import { navigateTo } from "@/utils/helper";
+import { ActionTypes } from "@/enums/actionTypes";
+import store from "@/store";
 
 export default defineComponent({
   components: { Item, Add },
   setup() {
-    const handleClickItem = (id: number) => {};
+    const store = useStore();
+
+    const handleClickItem = (id: number) => {
+      navigateTo("/pages/editOldMan/index", { id });
+    };
+
+    const oldmanList: ComputedRef<Array<OldMan>> = computed(() => {
+      return store.getters.oldmanList;
+    });
 
     return {
       oldmanList,
       handleClickItem,
     };
+  },
+  onLoad() {
+    store.dispatch(ActionTypes.getOldmanList);
   },
 });
 </script>

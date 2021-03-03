@@ -16,4 +16,5 @@ export enum ActionTypes {
   onMessageEvent = "onMessageEvent",
   getMessageList = "getMessageList",
   checkoutConversation = "checkoutConversation",
+  getOldmanList = "getOldmanList",
 }

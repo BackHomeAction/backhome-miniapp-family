@@ -1,4 +1,4 @@
-import { Family, Volunteer, Notice, Banner, Case, Face } from "@/api/types/models"
+import { Family, Volunteer, Notice, Banner, Case, Face, OldMan } from "@/api/types/models"
 import Ws from "../utils/websocket";
 
 export interface RootState {
@@ -8,6 +8,7 @@ export interface RootState {
   mission: MissionState;
   websocket: WebsocketState;
   tim: TimState;
+  oldman: OldmanState;
 }
 
 export interface UserState {
@@ -51,4 +52,8 @@ export interface TimState {
   isCompleted: boolean; // 当前会话消息是否已经请求完毕
   isLoading: boolean; // 是否正在请求
   groupIDsMap: Map<string, string>; // 群名 -> 群 ID 的 Map
+}
+
+export interface OldmanState {
+  oldmanList: Array<OldMan>;
 }
