@@ -4,6 +4,12 @@ module.exports = {
   rules: {
     "no-console": "off",
     "no-debugger": "off",
+    "vue/no-parsing-error": [
+      2,
+      {
+        "invalid-first-character-of-tag-name": false,
+      },
+    ],
   },
 
   parser: "vue-eslint-parser",

@@ -90,3 +90,18 @@ export const requestGetFaceIdentificationRecords = (params: {
     data: {},
   });
 };
+
+/**
+ * 发布案件
+ *
+ * @param {Case} params
+ * @return {*}
+ */
+export const requestCreateNewCase = (params: Case) => {
+  return http.request<ResponseData<object>>({
+    url: `case`,
+    method: "POST",
+    params: {},
+    data: params,
+  });
+};

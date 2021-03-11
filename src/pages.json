@@ -53,6 +53,11 @@
       "style": {
         "navigationBarTitleText": "" // 添加/编辑老人，动态设置标题
       }
+    }, {
+      "path": "pages/report/index",
+      "style": {
+        "navigationBarTitleText": "快速报案"
+      }
     }
   ],
   "globalStyle": {
@@ -102,6 +107,10 @@
       }, {
         "name": "新增老人信息",
         "path": "pages/editOldMan/index",
+        "query": ""
+      }, {
+        "name": "报案",
+        "path": "pages/report/index",
         "query": ""
       }
     ]

@@ -14,7 +14,7 @@
         name="快速报案"
         description="如发现老人走失，请及时在此报案"
         style="margin-top: 48rpx;"
-        path="/pages/myOldMans/index"
+        path="/pages/report/index"
         need-login
         skip-register
       />
