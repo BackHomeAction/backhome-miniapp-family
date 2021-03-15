@@ -159,7 +159,7 @@
         label="备注信息"
       >
         <u-input
-          v-model="form.other"
+          v-model="form.others"
           placeholder="可以输入关于老人的其他信息"
         />
       </u-form-item>
@@ -213,7 +213,7 @@ interface IForm {
   senileDementia: number;
   disability: string;
   otherFeature: string;
-  other: string;
+  others: string;
   identificationPhoto: string;
   lifePhoto: Array<string>;
 }
@@ -234,7 +234,7 @@ interface IPostForm {
   senileDementia: number;
   disability: string;
   otherFeature: string;
-  other: string;
+  others: string;
   identificationPhoto: string;
   lifePhoto: string;
 }
@@ -255,7 +255,7 @@ const form: IForm = reactive({
   senileDementia: 2,
   disability: "",
   otherFeature: "",
-  other: "",
+  others: "",
   identificationPhoto: "",
   lifePhoto: [],
 });
@@ -392,7 +392,7 @@ const handleSubmit = async () => {
     senileDementia: form.senileDementia,
     disability: form.disability,
     otherFeature: form.otherFeature,
-    other: form.other,
+    others: form.others,
     identificationPhoto: form.identificationPhoto,
     lifePhoto: JSON.stringify(form.lifePhoto),
   };
@@ -506,7 +506,7 @@ export default defineComponent({
     form.senileDementia = 2;
     form.disability = "";
     form.otherFeature = "";
-    form.other = "";
+    form.others = "";
     form.identificationPhoto = "";
     form.lifePhoto = [];
 
@@ -537,7 +537,7 @@ export default defineComponent({
       form.senileDementia = oldman.senileDementia;
       form.disability = oldman.disability;
       form.otherFeature = oldman.otherFeature;
-      form.other = oldman.other;
+      form.others = oldman.others;
       form.identificationPhoto = oldman.identificationPhoto;
       form.lifePhoto = JSON.parse(oldman.lifePhoto);
     } else {

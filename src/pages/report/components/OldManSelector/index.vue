@@ -1,8 +1,9 @@
 <template>
   <view class="body">
-    <view
+    <scroll-view
       v-for="item in list"
       :key="item.id"
+      scroll-x
       class="item"
       :class="{'item--selected': item.id === value}"
       @click="handleClick(item.id ? item.id : 0)"
@@ -12,7 +13,7 @@
         mode="aspectFill"
         :src="item.identificationPhoto"
       />
-    </view>
+    </scroll-view>
   </view>
 </template>
 
