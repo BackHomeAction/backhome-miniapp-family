@@ -2,6 +2,7 @@ import { requestGetTimUserSig } from "@/api/tim";
 import { requestUpdateWechatUserInfo } from "@/api/user";
 import templateMessageSettings from "@/config/templateMessage";
 import { ActionTypes } from "@/enums/actionTypes";
+import { MutationTypes } from "@/enums/mutationTypes";
 import store from "@/store";
 import {
   hideLoading,
@@ -56,6 +57,8 @@ const logout = async () => {
 
   try {
     await store.dispatch(ActionTypes.logout);
+    await store.dispatch(ActionTypes.clearCurrentMission);
+    store.commit(MutationTypes.SET_MY_ALL_MISSIONS, []);
     stopWebsocket();
     showToast("退出成功", "success");
   } catch (e) {
