@@ -186,7 +186,7 @@ import UFormItem from "@/components/UFormItem/index.vue";
 import UInput from "@/components/UFormItem/components/UInput/index.vue";
 import UPicker from "@/components/UFormItem/components/UPicker/index.vue";
 import OffenPlacesSelector from "./components/OffenPlacesSelector/index.vue";
-import OldManPhotoUploader from "./components/OldManPhotoUploader/index.vue";
+import OldManPhotoUploader from "@/components/OldManPhotoUploader/index.vue";
 import { IPlace } from "@/enums/placeTypes";
 import mapSettings from "@/config/map";
 import { showModalError, showToast, navigateBack } from "@/utils/helper";

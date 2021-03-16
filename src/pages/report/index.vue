@@ -39,12 +39,73 @@
     </view>
     <u-form>
       <u-form-item
+        v-if="!hasOldMan || reportType === 1"
+        required
+        label="姓名"
+      >
+        <u-input
+          v-model="form.name"
+          placeholder="请输入老人姓名"
+        />
+      </u-form-item>
+      <u-form-item
+        v-if="!hasOldMan || reportType === 1"
+        label="照片"
+        required
+        border-bottom
+        custom-style="padding-right: 0"
+      >
+        <scroll-view scroll-x>
+          <view style="display: flex;">
+            <old-man-photo-uploader
+              :photos="form.identificationPhoto ? [form.identificationPhoto] : []"
+              :max-upload="1"
+              label="请在此处添加证件照"
+              @change="handleIdPhotoUploaded"
+            />
+            <old-man-photo-uploader
+              :photos="form.lifePhoto"
+              :max-upload="8"
+              label="添加其他照片"
+              @change="handleLifePhotoUploaded"
+            />
+          </view>
+        </scroll-view>
+      </u-form-item>
+      <u-form-item
+        v-if="!hasOldMan || reportType === 1"
+        label="性别"
+        required
+      >
+        <u-picker
+          :range="sexRange"
+          :value="sexText"
+          placeholder="请选择性别"
+          @change="handleSexChange"
+        />
+      </u-form-item>
+      <u-form-item
+        v-if="!hasOldMan || reportType === 1"
+        label="出生日期"
+        required
+      >
+        <u-picker
+          mode="date"
+          :value="form.birthday"
+          :select-value="form.birthday"
+          placeholder="请选择出生日期"
+          @change="handleBirthdayChange"
+        />
+      </u-form-item>
+      <u-form-item
         label="走失时间"
         required
         border-bottom
         @tap="showDatePicker = true"
       >
-        {{ form.lostTime }}
+        <u-picker-wrapper>
+          {{ form.lostTime }}
+        </u-picker-wrapper>
       </u-form-item>
       <u-form-item
         label="走失地点"
@@ -52,7 +113,11 @@
         border-bottom
         @tap="handleChooseLostPlace"
       >
-        {{ form.lostPlace ? form.lostPlace.name : '请选择' }}
+        <u-picker-wrapper>
+          <span :class="{'picker__value--blank': !form.lostPlace}">
+            {{ form.lostPlace ? form.lostPlace.name : '请选择' }}
+          </span>
+        </u-picker-wrapper>
       </u-form-item>
       <u-form-item
         label="其他走失信息"
@@ -94,6 +159,7 @@ import UForm from "@/components/UForm/index.vue";
 import UFormItem from "@/components/UFormItem/index.vue";
 import UInput from "@/components/UFormItem/components/UInput/index.vue";
 import UPicker from "@/components/UFormItem/components/UPicker/index.vue";
+import UPickerWrapper from "@/components/UFormItem/components/UPickerWrapper/index.vue";
 import URadio from "@/components/UFormItem/components/URadio/index.vue";
 import OldManSelector from "./components/OldManSelector/index.vue";
 import store from "@/store";
@@ -103,8 +169,16 @@ import dayjs from "@/utils/dayjs";
 import mapSettings from "@/config/map";
 import { showModal, showToast } from "@/utils/helper";
 import { requestCreateNewCase } from "@/api/mission";
+import OldManPhotoUploader from "@/components/OldManPhotoUploader/index.vue";
+import { ActionTypes } from "@/enums/actionTypes";
+import { requestAddOldMan } from "@/api/oldman";
 
 interface IForm {
+  name: string;
+  identificationPhoto: string;
+  lifePhoto: Array<string>;
+  sex: number;
+  birthday: string;
   lostTime: string;
   lostPlace: null | IPlace;
   others: string;
@@ -123,7 +197,24 @@ interface IPostForm {
   others: string;
 }
 
+interface INewOldmanForm {
+  province: string;
+  city: string;
+  district: string;
+  place: string;
+  address: string;
+  name: string;
+  sex: number;
+  birthDate: string;
+  identificationPhoto: string;
+}
+
 const form: IForm = reactive({
+  name: "",
+  identificationPhoto: "",
+  lifePhoto: [],
+  sex: 0,
+  birthday: "",
   lostTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   lostPlace: null,
   others: "",
@@ -134,6 +225,48 @@ const hasOldMan = computed(() => {
   return store.getters.oldmanList && store.getters.oldmanList.length > 0;
 });
 const selectedOldmanId = ref(0);
+
+const useBirthday = () => {
+  const handleBirthdayChange = (e: any) => {
+    const value = e.detail.value;
+
+    form.birthday = value;
+  };
+
+  return { handleBirthdayChange };
+};
+
+const useSex = () => {
+  const sexRange = ["男", "女"];
+
+  const sexText = computed(() => {
+    if (!form.sex) return "";
+    return form.sex === 1 ? "男" : "女";
+  });
+
+  const handleSexChange = (e: any) => {
+    const value = e.detail.value;
+    if (value === "0") {
+      form.sex = 1;
+    } else {
+      form.sex = 2;
+    }
+  };
+
+  return { sexRange, sexText, handleSexChange };
+};
+
+const usePhotoUploader = () => {
+  const handleIdPhotoUploaded = (photoList: Array<string>) => {
+    form.identificationPhoto = photoList[0];
+  };
+
+  const handleLifePhotoUploaded = (photoList: Array<string>) => {
+    form.lifePhoto = photoList;
+  };
+
+  return { handleIdPhotoUploaded, handleLifePhotoUploaded };
+};
 
 const useReportType = () => {
   const reportTypeRange = computed(() => {
@@ -174,20 +307,22 @@ const useLostPlace = () => {
 const isSaving = ref(false);
 
 const handleSubmit = async () => {
+  if (!form.lostTime) {
+    showToast("请选择走失时间");
+    return;
+  }
+  if (!form.lostPlace) {
+    showToast("请选择走失地点");
+    return;
+  }
+
   if (hasOldMan.value && reportType.value === 0) {
     // 已添加老人直接报案
     if (!selectedOldmanId.value) {
       showToast("请选择走失老人");
       return;
     }
-    if (!form.lostTime) {
-      showToast("请选择走失时间");
-      return;
-    }
-    if (!form.lostPlace) {
-      showToast("请选择走失地点");
-      return;
-    }
+
     isSaving.value = true;
     try {
       const postForm: IPostForm = {
@@ -210,6 +345,49 @@ const handleSubmit = async () => {
     }
     isSaving.value = false;
   }
+
+  if (!hasOldMan.value || reportType.value === 1) {
+    if (!form.name) {
+      showToast("请输入老人姓名");
+      return;
+    }
+    if (!form.identificationPhoto) {
+      showToast("请上传老人证件照（用于人脸识别）");
+      return;
+    }
+    if (!form.sex) {
+      showToast("请选择老人性别");
+      return;
+    }
+    if (!form.birthday) {
+      showToast("请选择老人生日");
+      return;
+    }
+
+    isSaving.value = true;
+    try {
+      // 新建老人
+      const newOldmanForm: INewOldmanForm = {
+        province: form.lostPlace.province,
+        city: form.lostPlace.city,
+        district: form.lostPlace.district,
+        place: form.lostPlace.name,
+        address: form.lostPlace.address,
+        name: form.name,
+        sex: form.sex,
+        birthDate: form.birthday,
+        identificationPhoto: form.identificationPhoto,
+      };
+      const res = await requestAddOldMan(newOldmanForm);
+      console.log(res);
+      // TODO: 发布案件
+      await store.dispatch(ActionTypes.getOldmanList);
+    } catch (e) {
+      console.log(e);
+    }
+    isSaving.value = false;
+    // TODO: 跳报案列表
+  }
 };
 
 export default defineComponent({
@@ -219,15 +397,20 @@ export default defineComponent({
     UFormItem,
     OldManSelector,
     UInput,
-    // UPicker,
+    UPicker,
+    UPickerWrapper,
     URadio,
     DatePicker,
+    OldManPhotoUploader,
   },
   setup() {
     return {
       ...useReportType(),
       ...useDatePicker(),
       ...useLostPlace(),
+      ...usePhotoUploader(),
+      ...useSex(),
+      ...useBirthday(),
       selectedOldmanId,
       form,
       handleSubmit,
@@ -269,5 +452,13 @@ export default defineComponent({
   font-weight: 400;
   color: #000000;
   line-height: 50rpx;
+}
+
+.picker {
+  &__value {
+    &--blank {
+      color: $uni-text-color-placeholder !important;
+    }
+  }
 }
 </style>
