@@ -58,6 +58,11 @@
       "style": {
         "navigationBarTitleText": "快速报案"
       }
+    }, {
+      "path": "pages/myMissions/index",
+      "style": {
+        "navigationBarTitleText": "已报案件"
+      }
     }
   ],
   "globalStyle": {
@@ -111,6 +116,10 @@
       }, {
         "name": "报案",
         "path": "pages/report/index",
+        "query": ""
+      }, {
+        "name": "已报案件",
+        "path": "pages/myMissions/index",
         "query": ""
       }
     ]

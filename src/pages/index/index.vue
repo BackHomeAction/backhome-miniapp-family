@@ -23,7 +23,7 @@
         name="已报案件"
         description="如已报案，在此跟进案情"
         style="margin-top: 48rpx;"
-        path="/pages/myOldMans/index"
+        path="/pages/myMissions/index"
         need-login
       />
     </view>
