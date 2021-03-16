@@ -121,7 +121,7 @@ export default defineComponent({
   setup(props) {
     // 计算图片列表
     const images = computed(() => {
-      const lifePhotos = props?.data?.oldMan
+      const lifePhotos = props?.data?.oldMan?.lifePhotos
         ? JSON.parse(props.data.oldMan.lifePhoto)
         : [];
 
@@ -143,13 +143,13 @@ export default defineComponent({
 
     // 常去地点
     const offenPlace = computed(() => {
-      return props?.data?.oldMan
+      return props?.data?.oldMan?.offerPlace
         ? JSON.parse(props.data.oldMan.offerPlace)
         : [];
     });
     // 常去地点数量
     const offenPlaceNumber = computed(() => {
-      return props?.data?.oldMan
+      return props?.data?.oldMan?.offerPlace
         ? JSON.parse(props.data.oldMan.offerPlace).length
         : [];
     });
