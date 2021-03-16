@@ -37,11 +37,13 @@
           hover-class="none"
         />
         <u-cell-item
+          v-if="data.oldMan.phone"
           title="家属联系方式"
           :value="data.oldMan.phone"
           @click="makePhoneCall(data.oldMan.phone)"
         />
         <u-cell-item
+          v-if="data.oldMan.idcard"
           title="身份证号"
           :value="data.oldMan.idcard"
           :arrow="false"
@@ -50,12 +52,14 @@
       </u-cell-group>
       <u-cell-group title=" ">
         <u-cell-item
+          v-if="data.oldMan.height"
           title="身高"
           :value="`${data.oldMan.height} cm`"
           :arrow="false"
           hover-class="none"
         />
         <u-cell-item
+          v-if="data.oldMan.weight"
           title="体重"
           :value="`${data.oldMan.weight} kg`"
           :arrow="false"
