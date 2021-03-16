@@ -8,7 +8,7 @@ import { JavaList, OldMan, ResponseData } from "./types/models";
  * @return {*}
  */
 export const requestAddOldMan = (params: OldMan) => {
-  return http.request<ResponseData<object>>({
+  return http.request<ResponseData<OldMan>>({
     url: `family/oldMan`,
     method: "POST",
     params: {},

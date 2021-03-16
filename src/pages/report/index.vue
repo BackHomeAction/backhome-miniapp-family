@@ -167,7 +167,7 @@ import DatePicker from "@/components/DatePicker/index.vue";
 import { IPlace } from "@/enums/placeTypes";
 import dayjs from "@/utils/dayjs";
 import mapSettings from "@/config/map";
-import { showModal, showToast } from "@/utils/helper";
+import { reLaunch, showModal, showToast } from "@/utils/helper";
 import { requestCreateNewCase } from "@/api/mission";
 import OldManPhotoUploader from "@/components/OldManPhotoUploader/index.vue";
 import { ActionTypes } from "@/enums/actionTypes";
@@ -339,7 +339,7 @@ const handleSubmit = async () => {
       };
       await requestCreateNewCase(postForm);
       await showModal("报案成功", "请及时完善案件信息");
-      // TODO: 跳报案列表
+      reLaunch("/pages/myMissions/index");
     } catch (e) {
       console.log(e);
     }
@@ -380,8 +380,26 @@ const handleSubmit = async () => {
       };
       const res = await requestAddOldMan(newOldmanForm);
       console.log(res);
-      // TODO: 发布案件
+      const oldmanId = res.data.data?.id;
+      if (!oldmanId) throw new Error("添加老人失败");
+
+      const postForm: IPostForm = {
+        oldManId: oldmanId,
+        province: form.lostPlace.province,
+        city: form.lostPlace.city,
+        district: form.lostPlace.district,
+        place: form.lostPlace.name,
+        address: form.lostPlace.address,
+        longitude: form.lostPlace.longitude,
+        latitude: form.lostPlace.latitude,
+        lostTime: form.lostTime,
+        others: form.others,
+      };
+      await requestCreateNewCase(postForm);
+      await showModal("报案成功", "请及时完善案件信息");
+
       await store.dispatch(ActionTypes.getOldmanList);
+      reLaunch("/pages/myMissions/index");
     } catch (e) {
       console.log(e);
     }
