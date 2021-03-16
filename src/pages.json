@@ -63,6 +63,11 @@
       "style": {
         "navigationBarTitleText": "已报案件"
       }
+    }, {
+      "path": "pages/missionInformation/index",
+      "style": {
+        "navigationBarTitleText": "详细信息" // 案件详细信息
+      }
     }
   ],
   "globalStyle": {
