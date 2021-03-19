@@ -68,6 +68,11 @@
       "style": {
         "navigationBarTitleText": "详细信息" // 案件详细信息
       }
+    }, {
+      "path": "pages/mission/index",
+      "style": {
+        "navigationBarTitleText": "寻人"
+      }
     }
   ],
   "globalStyle": {

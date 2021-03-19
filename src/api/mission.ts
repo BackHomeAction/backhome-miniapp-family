@@ -81,10 +81,10 @@ export const requestGetVolunteersInCase = (params: { caseId: number }) => {
  * @return {*}
  */
 export const requestGetFaceIdentificationRecords = (params: {
-  caseId: number;
+  oldManId: number;
 }) => {
   return http.request<ResponseData<JavaList<Face>>>({
-    url: `case/face`,
+    url: `face`,
     method: "GET",
     params: params,
     data: {},

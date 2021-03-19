@@ -204,12 +204,12 @@ const Mission: Module<MissionState, RootState> = {
     },
     [ActionTypes.getCurrentMissionFaceRecognitionHistories]: (
       { commit },
-      params: { id: number }
+      params: { oldManId: number }
     ) => {
       return new Promise<void>(async (resolve, reject) => {
         try {
           const res = await requestGetFaceIdentificationRecords({
-            caseId: params.id,
+            oldManId: params.oldManId,
           });
           if (res.data.data) {
             commit(MutationTypes.SET_FACE_RECOGNITION_HISTORY, res.data.data);
@@ -240,7 +240,7 @@ const Mission: Module<MissionState, RootState> = {
       });
     },
     [ActionTypes.initCurrentMission]: (
-      { dispatch },
+      { state, dispatch },
       params: { id: number }
     ) => {
       return new Promise<void>(async (resolve, reject) => {
@@ -251,11 +251,11 @@ const Mission: Module<MissionState, RootState> = {
           await Promise.all([
             dispatch(ActionTypes.getCurrentMissionInfo, params),
             dispatch(ActionTypes.getCurrentMissionMembers, params),
-            dispatch(
-              ActionTypes.getCurrentMissionFaceRecognitionHistories,
-              params
-            ),
           ]);
+          await dispatch(
+            ActionTypes.getCurrentMissionFaceRecognitionHistories,
+            { oldManId: state.currentMission.missionInfo?.oldMan?.id }
+          );
           resolve();
         } catch (e) {
           console.log(e);

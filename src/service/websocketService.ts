@@ -40,6 +40,7 @@ export const startWebsocket = () => {
   console.log("WebSocket service started.");
   ws && ws.connect();
   interval = setInterval(intervalFunction, 10000);
+  store.commit(MutationTypes.SET_WS, ws);
 };
 
 /**
