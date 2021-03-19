@@ -1,9 +1,8 @@
 <template>
   <view class="body">
-    <scroll-view
+    <view
       v-for="item in list"
       :key="item.id"
-      scroll-x
       class="item"
       :class="{'item--selected': item.id === value}"
       @click="handleClick(item.id ? item.id : 0)"
@@ -13,7 +12,7 @@
         mode="aspectFill"
         :src="item.identificationPhoto"
       />
-    </scroll-view>
+    </view>
   </view>
 </template>
 
@@ -49,6 +48,15 @@ export default defineComponent({
 <style lang="scss" scoped>
 .body {
   background: #ffffff;
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, 100rpx);
+  grid-gap: 30rpx;
+
+  &::after {
+    content: "";
+    flex: 1;
+  }
 }
 
 .item {
@@ -68,10 +76,6 @@ export default defineComponent({
 
   &--selected {
     border: 4rpx solid #539eb7;
-  }
-
-  & + & {
-    margin-left: 60rpx;
   }
 }
 </style>

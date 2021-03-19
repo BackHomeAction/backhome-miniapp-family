@@ -16,7 +16,7 @@
         选择走失老人
       </view>
       <u-form>
-        <u-form-item>
+        <u-form-item border-bottom> 
           <old-man-selector v-model="selectedOldmanId" />
         </u-form-item>
       </u-form>
