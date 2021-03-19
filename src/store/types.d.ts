@@ -22,6 +22,13 @@ export interface AnnouncementState {
   banners: Array<Banner>;
 }
 
+export interface LocationState {
+  location: {
+    longitude: number;
+    latitude: number;
+  };
+}
+
 export interface ICurrentMission {
   missionInfo: null | Case;
   teamMembers: Array<Volunteer>;

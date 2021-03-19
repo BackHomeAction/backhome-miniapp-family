@@ -1,6 +1,37 @@
 import Ws from "../utils/websocket";
+import store from "@/store";
+import { MutationTypes } from "@/enums/mutationTypes";
 
 const ws = new Ws();
+let interval: number = 0;
+
+const getLocation = () => {
+  return new Promise<UniApp.GetLocationSuccess>((resolve, reject) => {
+    uni.getLocation({
+      type: "gcj02",
+      altitude: true,
+      success: (data) => {
+        resolve(data);
+      },
+      fail() {
+        reject();
+      },
+    });
+  });
+};
+
+const intervalFunction = async () => {
+  const logged = store.getters.logged;
+  if (!logged) return;
+
+  const location = await getLocation();
+  store.commit(MutationTypes.SET_LOCATION, {
+    longitude: location.longitude,
+    latitude: location.latitude,
+  });
+  sendWebsocketMessage("/home/family", "ping");
+  console.debug("Location reporter triggered.", location);
+};
 
 /**
  * 启动服务
@@ -8,6 +39,7 @@ const ws = new Ws();
 export const startWebsocket = () => {
   console.log("WebSocket service started.");
   ws && ws.connect();
+  interval = setInterval(intervalFunction, 10000);
 };
 
 /**
@@ -16,6 +48,7 @@ export const startWebsocket = () => {
 export const stopWebsocket = () => {
   console.log("WebSocket service stopped.");
   ws.disconnect();
+  clearInterval(interval);
 };
 
 /**

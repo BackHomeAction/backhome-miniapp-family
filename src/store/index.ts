@@ -6,6 +6,7 @@ import mission from "./modules/mission";
 import websocket from "./modules/websocket";
 import tim from "./modules/tim";
 import oldman from "./modules/oldman";
+import location from "./modules/location";
 
 export default createStore({
   modules: {
@@ -15,5 +16,6 @@ export default createStore({
     websocket,
     tim,
     oldman,
+    location,
   },
 });
