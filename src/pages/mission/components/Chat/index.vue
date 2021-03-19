@@ -45,10 +45,10 @@
         :data="data"
         @selected="handleShowVolunteerDetail" 
       />
-      <volunteer-detail
+      <!-- <volunteer-detail
         :show="showVolunteerDetail"
         :volunteer="volunteerInfo"
-      />
+      /> -->
     </view>
   </view>
 </template>
@@ -59,7 +59,7 @@ import { getMessageList } from "@/service/timService";
 import { defineComponent, PropType, computed, ref, watch, Ref } from "vue";
 import { useStore } from "vuex";
 import Volunteers from "./Volunteers.vue";
-import VolunteerDetail from "./VolunteerDetail.vue";
+// import VolunteerDetail from "./VolunteerDetail.vue";
 import ChatInput from "./ChatInput.vue";
 import Bubble from "./Bubble.vue";
 import BubbleNotification from "./BubbleNotification.vue";
@@ -83,13 +83,15 @@ const useVolunteerDetail = () => {
   const volunteerInfo: Ref<Volunteer | null> = ref(null);
 
   const handleShowVolunteerDetail = (volunteer: Volunteer) => {
-    if (volunteerInfo.value && volunteerInfo.value === volunteer) {
-      // 点击的就是已展开的，则自动收回
-      handleHideVolunteerDetail();
-      return;
-    }
-    volunteerInfo.value = volunteer;
-    showVolunteerDetail.value = true;
+    return false;
+
+    // if (volunteerInfo.value && volunteerInfo.value === volunteer) {
+    //   // 点击的就是已展开的，则自动收回
+    //   handleHideVolunteerDetail();
+    //   return;
+    // }
+    // volunteerInfo.value = volunteer;
+    // showVolunteerDetail.value = true;
   };
 
   const handleHideVolunteerDetail = () => {
@@ -108,7 +110,7 @@ const useVolunteerDetail = () => {
 export default defineComponent({
   components: {
     Volunteers,
-    VolunteerDetail,
+    // VolunteerDetail,
     ChatInput,
     Bubble,
     BubbleNotification,
