@@ -34,7 +34,7 @@
           管理员
         </view>
         <view class="info-name">
-          {{ data.nick }}
+          {{ data.flow === 'out' ? '我' : data.nick }}
         </view>
       </view>
       <view>
@@ -112,6 +112,10 @@ export default defineComponent({
           }
         }
         return 1;
+      }
+
+      if (role === 2) {
+        return store.getters.userInfo.avatarUrl;
       }
     };
 
