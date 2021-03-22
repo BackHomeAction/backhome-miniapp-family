@@ -440,6 +440,15 @@ const handleSubmit = async () => {
   try {
     if (oldmanId.value) {
       await requestEditOldMan({ id: oldmanId.value, ...postForm });
+      // 如果是编辑老人，检查是否有案件信息，如果有的话需要更新
+      const currentMissionOldManID =
+        store.getters.currentMission?.missionInfo?.oldMan?.id;
+      if (currentMissionOldManID && currentMissionOldManID === oldmanId.value) {
+        store.dispatch(
+          ActionTypes.initCurrentMission,
+          store.getters.currentMission.missionInfo.id
+        );
+      }
     } else {
       await requestAddOldMan(postForm);
     }

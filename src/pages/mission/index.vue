@@ -66,6 +66,19 @@
           v-show="popupName === 'info'"
           :data="currentMissionInfo"
         />
+        <view
+          v-if="popupName === 'info'"
+          class="action"
+        >
+          <u-button
+            type="success"
+            shadow
+            shape="circle"
+            @click="handleClickEdit"
+          >
+            修改信息
+          </u-button>
+        </view>
         <chat
           v-show="popupName === 'chat'"
           :show="showPopup && popupName === 'chat'"
@@ -100,6 +113,7 @@ import { ActionTypes } from "@/enums/actionTypes";
 import {
   hideLoading,
   navigateBack,
+  navigateTo,
   showLoading,
   showModal,
   showModalError,
@@ -116,6 +130,7 @@ import Chat from "./components/Chat/index.vue";
 import Man from "./components/Man/index.vue";
 import { checkoutGroup, resetGroup } from "@/service/timService";
 // import VolunteerInfoModal from "./components/VolunteerInfoModal/index.vue";
+import UButton from "@/components/UButton/index.vue";
 
 let mapContext: any;
 
@@ -444,6 +459,15 @@ const useMap = () => {
     }
   };
 
+  // 修改任务信息
+  const handleClickEdit = () => {
+    if (!currentMissionInfo.value?.oldMan?.id) return;
+
+    navigateTo("/pages/editOldMan/index", {
+      id: currentMissionInfo.value.oldMan.id,
+    });
+  };
+
   return {
     handleMapUpdated,
     handleToCurrentPosition,
@@ -459,6 +483,7 @@ const useMap = () => {
     isMapRegionCenterIsLostPlace,
     showVolunteerInfoModal,
     volunteerInfoData,
+    handleClickEdit,
   };
 };
 
@@ -549,6 +574,7 @@ export default defineComponent({
     FaceRecognition,
     Chat,
     Man,
+    UButton,
     // VolunteerInfoModal,
   },
   setup() {
@@ -680,5 +706,11 @@ export default defineComponent({
 
 .popup-wrapper {
   padding-top: 30rpx;
+}
+
+.action {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: center;
 }
 </style>
