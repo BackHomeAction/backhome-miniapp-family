@@ -35,6 +35,7 @@
 import { defineComponent, PropType } from "vue";
 import { showLoading, hideLoading, showModalError } from "@/utils/helper";
 import { requestUploadImage } from "@/api/common";
+import { requestCheckFaceValidity } from "@/api/mission";
 
 const uploadImage = async (path: string) => {
   const uploadRes = await requestUploadImage(path);
@@ -61,6 +62,10 @@ export default defineComponent({
       type: String,
       default: "请上传图片",
     },
+    checkValidity: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["change"],
   setup(props, { emit }) {
@@ -71,6 +76,23 @@ export default defineComponent({
           showLoading("请稍候");
           try {
             const url = await uploadImage(res.tempFilePaths[0]);
+            if (props.checkValidity) {
+              // 检测有效人脸信息
+              try {
+                const { data } = await requestCheckFaceValidity({
+                  imgUrl: url,
+                });
+                if (!data) {
+                  showModalError("请上传有效的老人照片");
+                  hideLoading();
+                  return;
+                }
+              } catch (e) {
+                console.log(e);
+                hideLoading();
+                return;
+              }
+            }
             const newPhotoList = props.photos.slice(0);
             newPhotoList.push(url);
             emit("change", newPhotoList);

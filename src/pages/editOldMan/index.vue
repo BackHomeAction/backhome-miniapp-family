@@ -25,6 +25,7 @@
               :photos="form.identificationPhoto ? [form.identificationPhoto] : []"
               :max-upload="1"
               label="请在此处添加证件照"
+              check-validity
               @change="handleIdPhotoUploaded"
             />
             <old-man-photo-uploader

@@ -105,3 +105,18 @@ export const requestCreateNewCase = (params: Case) => {
     data: params,
   });
 };
+
+/**
+ * 判别有效人脸
+ *
+ * @param {{ imgUrl: string }} params
+ * @return {*}
+ */
+export const requestCheckFaceValidity = (params: { imgUrl: string }) => {
+  return http.request<ResponseData<boolean>>({
+    url: `face/isOldMan`,
+    method: "POST",
+    params: {},
+    data: params,
+  });
+};
