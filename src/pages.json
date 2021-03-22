@@ -73,6 +73,11 @@
       "style": {
         "navigationBarTitleText": "寻人"
       }
+    }, {
+      "path": "pages/faceRecognitionHistory/index",
+      "style": {
+        "navigationBarTitleText": "人脸识别历史结果"
+      }
     }
   ],
   "globalStyle": {

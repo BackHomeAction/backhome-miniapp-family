@@ -488,10 +488,22 @@ const useMap = () => {
 };
 
 const usePopup = () => {
+  const currentMission: ComputedRef<ICurrentMission> = computed(() => {
+    return store.getters.currentMission;
+  });
+
   const showPopup = ref(false);
   const popupName: Ref<"info" | "chat" | "face"> = ref("info");
 
   const handleTabClick = (name: "info" | "chat" | "face") => {
+    if (!currentMission.value.missionInfo?.oldMan?.id) return;
+    // 点击人脸识别按钮，直接跳到人脸识别历史记录
+    if (name.localeCompare("face") === 0) {
+      navigateTo("/pages/faceRecognitionHistory/index", {
+        oldManId: currentMission.value.missionInfo?.oldMan?.id,
+      });
+      return;
+    }
     popupName.value = name;
     showPopup.value = true;
   };
