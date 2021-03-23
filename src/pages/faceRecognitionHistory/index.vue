@@ -36,17 +36,30 @@
           </view>
           <view
             class="table-item table-item-similarity"
-            :class="{red: item.result && item.result >= 80}"
+            :class="{red: item.result && item.result >= 0.8}"
           >
-            {{ item.result && `${item.result.toFixed(1)}%` }}
+            {{ item.result && `${(item.result*100).toFixed(1)}%` }}
           </view>
           <view
             class="table-item table-item-time"
           >
             {{ item.time && parseTime(item.time.toString()) }}
           </view>
-          <view class="table-item table-item-confirm">
+          <view
+            v-if="item.state !== 2"
+            class="table-item table-item-confirm"
+          >
             {{ item.state && getConfirmState(item.state) }}
+          </view>
+          <view
+            v-if="item.state === 2"
+            class="table-item table-item-confirm"
+            @click="handleConfirm(item.id)"
+          >
+            去确认
+            <text
+              class="iconfont icon-arrow-right"
+            />
           </view>
         </view>
       </view>
@@ -63,14 +76,17 @@ import store from "@/store";
 import { ActionTypes } from "@/enums/actionTypes";
 import { useStore } from "vuex";
 import dayjs from "@/utils/dayjs";
+import { requestConfirmFaceResult } from "@/api/mission";
+import { showToast } from "@/utils/helper";
 
 const isLoading = ref(true);
+const oldManId = ref(0);
 
-const getHistory = async (oldManId: number) => {
+const getHistory = async () => {
   isLoading.value = true;
   uni.showNavigationBarLoading();
   await store.dispatch(ActionTypes.getCurrentMissionFaceRecognitionHistories, {
-    oldManId: oldManId,
+    oldManId: oldManId.value,
   });
   isLoading.value = false;
   uni.hideNavigationBarLoading();
@@ -108,16 +124,49 @@ export default defineComponent({
       }
     };
 
+    const handleConfirm = (id: number) => {
+      uni.showActionSheet({
+        itemList: ["确认是", "确认否"],
+        async success(res) {
+          try {
+            // 确认是
+            if (res.tapIndex === 0) {
+              await requestConfirmFaceResult({
+                faceId: id,
+                state: 3,
+              });
+            }
+            // 确认否
+            if (res.tapIndex === 1) {
+              await requestConfirmFaceResult({
+                faceId: id,
+                state: 4,
+              });
+            }
+            showToast("确认成功", "success");
+            getHistory();
+          } catch (e) {
+            console.log(e);
+          }
+        },
+        fail(res) {
+          console.log(res.errMsg);
+        },
+      });
+    };
+
     return {
       isLoading,
       historyList,
       handlePreviewImage,
       parseTime,
       getConfirmState,
+      handleConfirm,
     };
   },
   onLoad(query: { oldManId: string }) {
-    getHistory(parseInt(query.oldManId, 10));
+    oldManId.value = parseInt(query.oldManId, 10);
+    getHistory();
   },
 });
 </script>
@@ -163,7 +212,7 @@ export default defineComponent({
       flex: 1;
 
       &.red {
-        color: $uni-color-primary;
+        color: #a20a0a;
       }
     }
 
@@ -173,6 +222,10 @@ export default defineComponent({
 
     &-confirm {
       width: 180rpx;
+
+      .icon-arrow-right {
+        font-size: 48rpx;
+      }
     }
   }
 }

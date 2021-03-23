@@ -1,5 +1,12 @@
 import http from "@/utils/request";
-import { Case, Face, JavaList, ResponseData, Volunteer } from "./types/models";
+import {
+  Case,
+  ConfirmResult,
+  Face,
+  JavaList,
+  ResponseData,
+  Volunteer,
+} from "./types/models";
 
 /**
  * 获取开启的案件数量
@@ -115,6 +122,21 @@ export const requestCreateNewCase = (params: Case) => {
 export const requestCheckFaceValidity = (params: { imgUrl: string }) => {
   return http.request<ResponseData<boolean>>({
     url: `face/isOldMan`,
+    method: "POST",
+    params: {},
+    data: params,
+  });
+};
+
+/**
+ * 家属确认人脸识别结果,state为3是成功，4是失败
+ *
+ * @param {ConfirmResult} params
+ * @return {*}
+ */
+export const requestConfirmFaceResult = (params: ConfirmResult) => {
+  return http.request<ResponseData<object>>({
+    url: `face/result`,
     method: "POST",
     params: {},
     data: params,

@@ -60,8 +60,8 @@ export interface Case {
   volunteerCase?: VolunteerCase; // 志愿者-案件信息
 }
 export interface ConfirmResult {
-  faceId?: string; // 人脸记录ID
-  state?: string; // 确认结果，3为成功，4为失败
+  faceId?: number; // 人脸记录ID
+  state?: number; // 确认结果，3为成功，4为失败
 }
 export interface DeleteOldManId {
   id?: string; // 老人信息ID
