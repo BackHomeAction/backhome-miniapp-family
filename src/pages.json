@@ -136,6 +136,10 @@
         "name": "已报案件",
         "path": "pages/myMissions/index",
         "query": ""
+      }, {
+        "name": "寻人",
+        "path": "pages/mission/index",
+        "query": "id=27"
       }
     ]
   }

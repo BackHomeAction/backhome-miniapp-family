@@ -54,6 +54,9 @@
       v-model:value="showVolunteerInfoModal"
       :volunteer-data="volunteerInfoData"
     /> -->
+    <timeout-modal
+      v-model:value="showTimeoutModal"
+    />
 
     <u-popup
       v-model:value="showPopup"
@@ -131,6 +134,8 @@ import Man from "./components/Man/index.vue";
 import { checkoutGroup, resetGroup } from "@/service/timService";
 // import VolunteerInfoModal from "./components/VolunteerInfoModal/index.vue";
 import UButton from "@/components/UButton/index.vue";
+import TimeoutModal from "./components/TimeoutModal/index.vue";
+import dayjs from "@/utils/dayjs";
 
 let mapContext: any;
 
@@ -144,6 +149,8 @@ const VOLUNTEER_MARKER_SIZE = 50;
 const VOLUNTEER_MARKER_ID_START = 50000000;
 
 const caseId = ref(0); // 案件 ID
+
+const showTimeoutModal = ref(false); // 是否展示
 
 // 用于比对经纬度（舍弃部分精度）
 function locationCompare(left: number, right: number) {
@@ -560,6 +567,11 @@ const init = async () => {
     await store.dispatch(ActionTypes.initCurrentMission, {
       id: caseId.value,
     });
+    // 如果案件开启时间 >24h，就提示家属报警
+    const startTime = store.getters.currentMission.missionInfo.startTime;
+    if (dayjs().diff(startTime, "day", true) > 1) {
+      showTimeoutModal.value = true;
+    }
     // 设置视野中心为走失位置
     mapContext.moveToLocation({
       longitude: store.getters.currentMission.missionInfo.longitude,
@@ -588,6 +600,7 @@ export default defineComponent({
     Man,
     UButton,
     // VolunteerInfoModal,
+    TimeoutModal,
   },
   setup() {
     const handleChangeCase = async (item: Case) => {
@@ -599,7 +612,13 @@ export default defineComponent({
       hideLoading();
     };
 
-    return { ...useMap(), mapSettings, ...usePopup(), handleChangeCase };
+    return {
+      ...useMap(),
+      mapSettings,
+      ...usePopup(),
+      handleChangeCase,
+      showTimeoutModal,
+    };
   },
   onLoad(query: { id: string }) {
     caseId.value = parseInt(query.id, 10);
