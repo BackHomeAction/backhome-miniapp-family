@@ -536,8 +536,8 @@ export default defineComponent({
       form.phone = oldman.phone;
       form.idcard = oldman.idcard;
       form.sex = oldman.sex;
-      form.height = oldman.height.toString();
-      form.weight = oldman.weight.toString();
+      if (oldman.height) form.height = oldman.height.toString();
+      if (oldman.weight) form.weight = oldman.weight.toString();
       form.birthday = oldman.birthDate;
       form.province = oldman.province;
       form.city = oldman.city;
