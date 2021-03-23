@@ -100,7 +100,6 @@
       <u-form-item
         label="走失时间"
         required
-        border-bottom
         @tap="showDatePicker = true"
       >
         <u-picker-wrapper>
@@ -110,7 +109,6 @@
       <u-form-item
         label="走失地点"
         required
-        border-bottom
         @tap="handleChooseLostPlace"
       >
         <u-picker-wrapper>
