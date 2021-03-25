@@ -98,6 +98,14 @@
           hover-class="none"
         />
       </u-cell-group>
+      <u-cell-group title=" ">
+        <u-cell-item
+          title="其他走失信息"
+          :value="data.others || '暂无'"
+          :arrow="false"
+          hover-class="none"
+        />
+      </u-cell-group>
     </view>
 
     <places-popup

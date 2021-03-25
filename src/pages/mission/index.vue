@@ -77,6 +77,7 @@
             type="success"
             shadow
             shape="circle"
+            style="margin-bottom: 20rpx"
             @click="handleClickEdit"
           >
             修改信息
