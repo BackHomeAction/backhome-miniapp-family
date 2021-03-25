@@ -226,15 +226,29 @@ const setDefaultPlace = async () => {
       latitude: store.getters.location.latitude,
       longitude: store.getters.location.longitude,
     });
+    const placeInfo =
+      res.data.result.address_reference.famous_area ||
+      res.data.result.landmark_l1 ||
+      res.data.result.landmark_l2;
     form.lostPlace = {
-      name: res.data.result.address_reference.famous_area.title,
-      latitude: res.data.result.address_reference.famous_area.location.lat,
-      longitude: res.data.result.address_reference.famous_area.location.lng,
-      address: res.data.result.address,
+      name:
+        (placeInfo && placeInfo.title) ||
+        res.data.result.formatted_addresses.recommend ||
+        res.data.result.address,
+      latitude:
+        (placeInfo && placeInfo.location.lat) ||
+        store.getters.location.latitude,
+      longitude:
+        (placeInfo && placeInfo.location.lng) ||
+        store.getters.location.longitude,
+      address:
+        res.data.result.formatted_addresses.recommend ||
+        res.data.result.address,
       province: res.data.result.address_component.province,
       city: res.data.result.address_component.city,
       district: res.data.result.address_component.district,
     };
+    console.log(form.lostPlace);
   } catch (e) {
     console.log(e);
   }
