@@ -86,15 +86,15 @@
       </u-form-item>
       <u-form-item
         v-if="!hasOldMan || reportType === 1"
-        label="出生日期"
+        label="大致年龄"
         required
       >
         <u-picker
-          mode="date"
-          :value="form.birthday"
-          :select-value="form.birthday"
-          placeholder="请选择出生日期"
-          @change="handleBirthdayChange"
+          :range="ageSelectorRange"
+          range-key="label"
+          :value="ageRangeText"
+          placeholder="请选择大致年龄"
+          @change="handleAgeChange"
         />
       </u-form-item>
       <u-form-item
@@ -261,14 +261,29 @@ const hasOldMan = computed(() => {
 });
 const selectedOldmanId = ref(0);
 
-const useBirthday = () => {
-  const handleBirthdayChange = (e: any) => {
-    const value = e.detail.value;
+const useAge = () => {
+  let ageSelectorRange = [];
+  for (let age = 60; age <= 140; age += 5) {
+    ageSelectorRange.push({
+      label: `约 ${age} 岁`,
+      value: age,
+    });
+  }
 
-    form.birthday = value;
+  const ageRangeText = computed(() => {
+    return form.birthday ? `约 ${dayjs().diff(form.birthday, "year")} 岁` : "";
+  });
+
+  const handleAgeChange = (e: any) => {
+    const value = e.detail.value;
+    const age = 60 + value * 5;
+
+    form.birthday = dayjs()
+      .year(dayjs().year() - age)
+      .format("YYYY-MM-DD");
   };
 
-  return { handleBirthdayChange };
+  return { ageSelectorRange, ageRangeText, handleAgeChange };
 };
 
 const useSex = () => {
@@ -462,7 +477,7 @@ export default defineComponent({
       ...useLostPlace(),
       ...usePhotoUploader(),
       ...useSex(),
-      ...useBirthday(),
+      ...useAge(),
       selectedOldmanId,
       form,
       handleSubmit,
