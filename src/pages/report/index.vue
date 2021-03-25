@@ -170,6 +170,7 @@ import { requestCreateNewCase } from "@/api/mission";
 import OldManPhotoUploader from "@/components/OldManPhotoUploader/index.vue";
 import { ActionTypes } from "@/enums/actionTypes";
 import { requestAddOldMan } from "@/api/oldman";
+import { searchGeoCoder } from "@/api/tencentMap";
 
 interface IForm {
   name: string;
@@ -217,6 +218,28 @@ const form: IForm = reactive({
   lostPlace: null,
   others: "",
 });
+
+// 设置默认走失地点
+const setDefaultPlace = async () => {
+  try {
+    const res = await searchGeoCoder({
+      latitude: store.getters.location.latitude,
+      longitude: store.getters.location.longitude,
+    });
+    form.lostPlace = {
+      name: res.data.result.address_reference.famous_area.title,
+      latitude: res.data.result.address_reference.famous_area.location.lat,
+      longitude: res.data.result.address_reference.famous_area.location.lng,
+      address: res.data.result.address,
+      province: res.data.result.address_component.province,
+      city: res.data.result.address_component.city,
+      district: res.data.result.address_component.district,
+    };
+  } catch (e) {
+    console.log(e);
+  }
+  return null;
+};
 
 const reportType = ref(0);
 const hasOldMan = computed(() => {
@@ -431,6 +454,9 @@ export default defineComponent({
       handleSubmit,
       isSaving,
     };
+  },
+  onLoad() {
+    setDefaultPlace();
   },
   onShow() {
     const chooseLocation = requirePlugin("chooseLocation");

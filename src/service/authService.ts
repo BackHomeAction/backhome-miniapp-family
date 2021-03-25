@@ -12,7 +12,11 @@ import {
   showToast,
 } from "@/utils/helper";
 import tim from "@/utils/tim";
-import { startWebsocket, stopWebsocket } from "./websocketService";
+import {
+  saveLocation,
+  startWebsocket,
+  stopWebsocket,
+} from "./websocketService";
 
 const login = async (triggeredByButton = false) => {
   showLoading("登录中");
@@ -20,6 +24,7 @@ const login = async (triggeredByButton = false) => {
   await getUserInfo(); //获取个人信息
   await requestLocationPermission(); // 申请定位权限
   await loginTIM(); // 登录 IM
+  await saveLocation();
 
   showToast("登录成功", "success");
   try {

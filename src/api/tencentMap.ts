@@ -27,3 +27,25 @@ export const searchPlacesNearby = (data: {
     custom: { noAuth: true, noInterceptor: true },
   });
 };
+
+/**
+ * 逆地址解析
+ *
+ * @param {({
+ *   latitude: number | string;
+ *   longitude: number | string;
+ * })} data
+ * @return {*}
+ */
+export const searchGeoCoder = (data: {
+  latitude: number | string;
+  longitude: number | string;
+}) => {
+  return http.get("https://apis.map.qq.com/ws/geocoder/v1", {
+    params: {
+      location: `${data.latitude},${data.longitude}`,
+      key: mapSettings.key,
+    },
+    custom: { noAuth: true, noInterceptor: true },
+  });
+};

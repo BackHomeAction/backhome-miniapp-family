@@ -20,15 +20,20 @@ const getLocation = () => {
   });
 };
 
-const intervalFunction = async () => {
-  const logged = store.getters.logged;
-  if (!logged) return;
-
+export const saveLocation = async () => {
   const location = await getLocation();
   store.commit(MutationTypes.SET_LOCATION, {
     longitude: location.longitude,
     latitude: location.latitude,
   });
+};
+
+const intervalFunction = async () => {
+  const logged = store.getters.logged;
+  if (!logged) return;
+
+  await saveLocation();
+
   sendWebsocketMessage("/home/family", "ping");
   console.debug("Location reporter triggered.", location);
 };
