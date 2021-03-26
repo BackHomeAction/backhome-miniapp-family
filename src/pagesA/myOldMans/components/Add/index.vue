@@ -21,7 +21,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   setup() {
     const handleClick = () => {
-      navigateTo("/pages/editOldMan/index");
+      navigateTo("/pagesA/editOldMan/index");
     };
 
     return { handleClick };

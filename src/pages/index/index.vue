@@ -6,7 +6,7 @@
         icon="/static/images/home/add.png"
         name="我的老人"
         description="在这里完善老人的详细信息"
-        path="/pages/myOldMans/index"
+        path="/pagesA/myOldMans/index"
         need-login
       />
       <index-item
@@ -14,7 +14,7 @@
         name="快速报案"
         description="如发现老人走失，请及时在此报案"
         style="margin-top: 48rpx;"
-        path="/pages/report/index"
+        path="/pagesA/report/index"
         need-login
         skip-register
       />
@@ -23,7 +23,7 @@
         name="已报案件"
         description="如已报案，在此跟进案情"
         style="margin-top: 48rpx;"
-        path="/pages/myMissions/index"
+        path="/pagesA/myMissions/index"
         need-login
       />
     </view>

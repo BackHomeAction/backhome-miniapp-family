@@ -127,11 +127,11 @@ export default defineComponent({
   },
   setup(props) {
     const handleClickShowmore = () => {
-      navigateTo("/pages/missionInformation/index", { id: props.data.id });
+      navigateTo("/pagesA/missionInformation/index", { id: props.data.id });
     };
 
     const handleClickEnterMission = () => {
-      navigateTo("/pages/mission/index", { id: props.data.id });
+      navigateTo("/pagesA/mission/index", { id: props.data.id });
     };
 
     // 计算年龄

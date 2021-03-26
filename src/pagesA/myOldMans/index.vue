@@ -26,7 +26,7 @@ export default defineComponent({
     const store = useStore();
 
     const handleClickItem = (id: number) => {
-      navigateTo("/pages/editOldMan/index", { id });
+      navigateTo("/pagesA/editOldMan/index", { id });
     };
 
     const oldmanList: ComputedRef<Array<OldMan>> = computed(() => {

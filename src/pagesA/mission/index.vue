@@ -471,7 +471,7 @@ const useMap = () => {
   const handleClickEdit = () => {
     if (!currentMissionInfo.value?.oldMan?.id) return;
 
-    navigateTo("/pages/editOldMan/index", {
+    navigateTo("/pagesA/editOldMan/index", {
       id: currentMissionInfo.value.oldMan.id,
     });
   };
@@ -507,7 +507,7 @@ const usePopup = () => {
     if (!currentMission.value.missionInfo?.oldMan?.id) return;
     // 点击人脸识别按钮，直接跳到人脸识别历史记录
     if (name.localeCompare("face") === 0) {
-      navigateTo("/pages/faceRecognitionHistory/index", {
+      navigateTo("/pagesA/faceRecognitionHistory/index", {
         oldManId: currentMission.value.missionInfo?.oldMan?.id,
       });
       return;

@@ -272,7 +272,7 @@ export default defineComponent({
     });
 
     const handleEditProfile = () => {
-      navigateTo("/pages/editProfile/index");
+      navigateTo("/pagesA/editProfile/index");
     };
 
     const handleClickPhone = () => {

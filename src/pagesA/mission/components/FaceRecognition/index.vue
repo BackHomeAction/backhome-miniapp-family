@@ -21,7 +21,7 @@ import { navigateTo } from "@/utils/helper";
 
 const useUpload = (caseId?: number) => {
   const handleClickHistory = () => {
-    navigateTo("/pages/faceRecognitionHistory/index", { id: caseId });
+    navigateTo("/pagesA/faceRecognitionHistory/index", { id: caseId });
   };
 
   return {

@@ -17,81 +17,85 @@
       "style": {
         "navigationStyle": "custom"
       }
-    }, {
-      "path": "pages/register/index",
+    }
+  ],
+  "subPackages": [{
+    "root": "pagesA",
+    "pages": [{
+      "path": "register/index",
       "style": {
         "navigationBarTitleText": "完善个人信息"
       }
     }, {
-      "path": "pages/editProfile/index",
+      "path": "editProfile/index",
       "style": {
         "navigationBarTitleText": "修改个人信息"
       }
     }, {
-      "path": "pages/editPhoneNumber/index",
+      "path": "editPhoneNumber/index",
       "style": {
         "navigationBarTitleText": "修改手机号"
       }
     }, {
-      "path": "pages/UAvatarCropper/index",
+      "path": "UAvatarCropper/index",
       "style": {
         "navigationBarTitleText": "头像上传",
         "navigationBarBackgroundColor": "#000000"
       }
     }, {
-      "path": "pages/requestSubscribeMessage/index",
+      "path": "requestSubscribeMessage/index",
       "style": {
         "navigationBarTitleText": "设置订阅"
       }
     }, {
-      "path": "pages/myOldMans/index",
+      "path": "myOldMans/index",
       "style": {
         "navigationBarTitleText": "我的老人信息"
       }
     }, {
-      "path": "pages/editOldMan/index",
+      "path": "editOldMan/index",
       "style": {
         "navigationBarTitleText": "" // 添加/编辑老人，动态设置标题
       }
     }, {
-      "path": "pages/report/index",
+      "path": "report/index",
       "style": {
         "navigationBarTitleText": "快速报案"
       }
     }, {
-      "path": "pages/myMissions/index",
+      "path": "myMissions/index",
       "style": {
         "navigationBarTitleText": "已报案件"
       }
     }, {
-      "path": "pages/missionInformation/index",
+      "path": "missionInformation/index",
       "style": {
         "navigationBarTitleText": "详细信息" // 案件详细信息
       }
     }, {
-      "path": "pages/mission/index",
+      "path": "mission/index",
       "style": {
         "navigationBarTitleText": "寻人"
       }
     }, {
-      "path": "pages/faceRecognitionHistory/index",
+      "path": "faceRecognitionHistory/index",
       "style": {
         "navigationBarTitleText": "人脸识别历史结果"
       }
     }, {
-      "path": "pages/poster/index",
+      "path": "poster/index",
       "style": {
         "navigationBarTitleText": "分享海报"
       }
-    }
-  ],
+    }]
+  }],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "归家行动家属端",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#f0f2f5",
-    "usingComponents":{
-      "painter":"/wxcomponents/painter/painter"
+    "usingComponents": {
+      "painter": "/wxcomponents/painter/painter"
     }
   },
   "tabBar": {
@@ -122,35 +126,35 @@
         "query": ""
       }, {
         "name": "修改个人信息",
-        "path": "pages/editProfile/index",
+        "path": "pagesA/editProfile/index",
         "query": ""
       }, {
         "name": "修改手机号",
-        "path": "pages/editPhoneNumber/index",
+        "path": "pagesA/editPhoneNumber/index",
         "query": ""
       }, {
         "name": "我的老人信息",
-        "path": "pages/myOldMans/index",
+        "path": "pagesA/myOldMans/index",
         "query": ""
       }, {
         "name": "新增老人信息",
-        "path": "pages/editOldMan/index",
+        "path": "pagesA/editOldMan/index",
         "query": ""
       }, {
         "name": "报案",
-        "path": "pages/report/index",
+        "path": "pagesA/report/index",
         "query": ""
       }, {
         "name": "已报案件",
-        "path": "pages/myMissions/index",
+        "path": "pagesA/myMissions/index",
         "query": ""
       }, {
         "name": "寻人",
-        "path": "pages/mission/index",
+        "path": "pagesA/mission/index",
         "query": "id=27"
       }, {
         "name": "分享海报",
-        "path": "pages/poster/index",
+        "path": "pagesA/poster/index",
         "query": "id=27"
       }
     ]

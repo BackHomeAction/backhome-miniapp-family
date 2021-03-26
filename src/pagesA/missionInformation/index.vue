@@ -67,7 +67,7 @@ export default defineComponent({
     });
 
     const handleClickEnterMission = () => {
-      navigateTo("/pages/mission/index", { id: caseInfo?.value?.id });
+      navigateTo("/pagesA/mission/index", { id: caseInfo?.value?.id });
     };
 
     return {

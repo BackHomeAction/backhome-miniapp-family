@@ -48,10 +48,10 @@ const login = async (triggeredByButton = false) => {
     if (triggeredByButton) {
       if (store.getters.userInfo.phone) {
         // 如果已绑定手机，则直接进入绑定个人信息页面
-        navigateTo("/pages/register/index?step=2");
+        navigateTo("/pagesA/register/index?step=2");
       } else {
         // 如果否则先绑定手机
-        navigateTo("/pages/register/index");
+        navigateTo("/pagesA/register/index");
       }
     }
   }
@@ -108,7 +108,7 @@ const checkPermissions = (triggeredByButton = false) => {
             templateMessageSettings.tmplIds[0]
           ] !== "accept"
         ) {
-          navigateTo("/pages/requestSubscribeMessage/index");
+          navigateTo("/pagesA/requestSubscribeMessage/index");
         } else if (triggeredByButton) {
           // 如果用户已永久授权并通过点击登录按钮登录，则申请一次订阅权限
           try {

@@ -152,7 +152,7 @@ const useEditAddress = () => {
 
 const useEditAvatar = () => {
   const handleChooseAvatar = () => {
-    navigateTo("/pages/UAvatarCropper/index", {
+    navigateTo("/pagesA/UAvatarCropper/index", {
       // 输出图片宽度，高等于宽，单位px
       destWidth: 200,
       // 裁剪框宽度，高等于宽，单位px
@@ -192,7 +192,7 @@ export default defineComponent({
   components: { UCellGroup, UCellItem },
   setup() {
     const handleEditPhoneNumber = () => {
-      navigateTo("/pages/editPhoneNumber/index");
+      navigateTo("/pagesA/editPhoneNumber/index");
     };
 
     return {

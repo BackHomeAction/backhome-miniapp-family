@@ -389,7 +389,7 @@ const handleSubmit = async () => {
       };
       await requestCreateNewCase(postForm);
       await showModal("报案成功", "请及时完善案件信息");
-      reLaunch("/pages/myMissions/index");
+      reLaunch("/pagesA/myMissions/index");
     } catch (e) {
       console.log(e);
     }
@@ -449,7 +449,7 @@ const handleSubmit = async () => {
       await showModal("报案成功", "请及时完善案件信息");
 
       await store.dispatch(ActionTypes.getOldmanList);
-      reLaunch("/pages/myMissions/index");
+      reLaunch("/pagesA/myMissions/index");
     } catch (e) {
       console.log(e);
     }
