@@ -89,6 +89,12 @@
       }
     }]
   }],
+  "preloadRule": {
+    "pagesA/report/index": {
+        "network": "all",
+        "packages": ["__APP__"]
+    }
+  },
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "归家行动家属端",
