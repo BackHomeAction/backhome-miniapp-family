@@ -43,7 +43,12 @@
       />
     </view>
 
-    <view class="map__util map__util-help" />
+    <view class="map__control right">
+      <view
+        class="map__control-item map__control-item-share"
+        @click.stop="handleShare"
+      />
+    </view>
 
     <!-- popups below -->
     <place-info-modal
@@ -613,12 +618,17 @@ export default defineComponent({
       hideLoading();
     };
 
+    const handleShare = () => {
+      navigateTo("/pagesA/poster/index", { id: caseId.value });
+    };
+
     return {
       ...useMap(),
       mapSettings,
       ...usePopup(),
       handleChangeCase,
       showTimeoutModal,
+      handleShare,
     };
   },
   onLoad(query: { id: string }) {
@@ -664,7 +674,7 @@ export default defineComponent({
     left: 17rpx;
     bottom: calc(16rpx + 250rpx + 30rpx + env(safe-area-inset-bottom));
     width: 80rpx;
-    height: 160rpx;
+    // height: 160rpx;
     background: #ffffff;
     box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.5);
     border-radius: 10rpx;
@@ -673,6 +683,11 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    &.right {
+      left: auto;
+      right: 17rpx;
+    }
 
     &-item {
       width: 60rpx;
@@ -696,6 +711,10 @@ export default defineComponent({
         }
       }
 
+      &-share {
+        background-image: url("@/static/images/map/control_share.png");
+      }
+
       & + & {
         margin-top: 20rpx;
 
@@ -717,23 +736,23 @@ export default defineComponent({
     }
   }
 
-  &__util {
-    position: fixed;
-    right: 17rpx;
-    bottom: calc(16rpx + 250rpx + 30rpx + env(safe-area-inset-bottom));
-    width: 48rpx;
-    height: 48rpx;
-    opacity: 0.8;
+  // &__util {
+  //   position: fixed;
+  //   right: 17rpx;
+  //   bottom: calc(16rpx + 250rpx + 30rpx + env(safe-area-inset-bottom));
+  //   width: 48rpx;
+  //   height: 48rpx;
+  //   opacity: 0.8;
 
-    & + & {
-      margin-top: 24rpx;
-    }
+  //   & + & {
+  //     margin-top: 24rpx;
+  //   }
 
-    &-help {
-      background: url("@/static/images/map/help.png");
-      background-size: cover;
-    }
-  }
+  //   &-help {
+  //     background: url("@/static/images/map/help.png");
+  //     background-size: cover;
+  //   }
+  // }
 }
 
 .popup-wrapper {
