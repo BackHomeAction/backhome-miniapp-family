@@ -115,7 +115,7 @@ const lostDate = computed(() => {
 });
 // 常去地点文字
 const offenPlaceText = computed(() => {
-  if (!caseInfo.value?.oldMan?.offerPlace) return "";
+  if (!caseInfo.value?.oldMan?.offerPlace) return "暂无";
 
   let text = "";
   const list = JSON.parse(caseInfo.value?.oldMan.offerPlace);
