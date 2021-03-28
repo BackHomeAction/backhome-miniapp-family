@@ -23,6 +23,7 @@
       <scroll-view
         v-if="!isLoading"
         class="poster"
+        :class="{'single-page': isSinglePage}"
         scroll-y
       >
         <view class="poster__wrapper">
@@ -34,7 +35,10 @@
           />
         </view>
       </scroll-view>
-      <view class="action">
+      <view
+        v-if="!isSinglePage"
+        class="action"
+      >
         <button
           class="action__item"
           open-type="share"
@@ -97,6 +101,7 @@ import { computed, defineComponent, Ref, ref } from "vue";
 const posterUrl = ref("");
 const smallPosterUrl = ref("");
 const isLoading = ref(true);
+const isSinglePage = ref(false); // 是否为单页模式
 const caseID = ref(0);
 const caseInfo: Ref<null | Case> = ref(null);
 
@@ -533,10 +538,15 @@ export default defineComponent({
       posterUrl,
       isLoading,
       caseInfo,
+      isSinglePage,
     };
   },
   onLoad(params: { id: string }) {
     caseID.value = parseInt(params.id, 10);
+    const { scene } = uni.getLaunchOptionsSync();
+    if (scene === 1154) {
+      isSinglePage.value = true;
+    }
   },
   onReady() {
     getCaseInfo(caseID.value);
@@ -579,6 +589,10 @@ export default defineComponent({
 .poster {
   box-sizing: border-box;
   height: calc(100vh - 200rpx);
+
+  &.single-page {
+    height: 100vh;
+  }
 
   &__wrapper {
     box-sizing: border-box;
