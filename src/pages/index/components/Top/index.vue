@@ -1,7 +1,6 @@
 <template>
   <view
     class="top"
-    :class="{'top--title': withTitle}"
     :style="{paddingTop: `${menuTop}px`}"
   >
     <view
@@ -122,7 +121,7 @@ export default defineComponent({
     overflow: hidden;
 
     &-default {
-      background-color: red;
+      background-image: url("https://fwwb2020-common.tgucsdn.com/images/banner/default.jpg");
     }
   }
 }
