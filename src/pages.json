@@ -87,12 +87,17 @@
       "style": {
         "navigationBarTitleText": "分享海报"
       }
+    }, {
+      "path": "announcement/index",
+      "style": {
+        "navigationBarTitleText": "公告详情"
+      }
     }]
   }],
   "preloadRule": {
     "pagesA/report/index": {
-        "network": "all",
-        "packages": ["__APP__"]
+      "network": "all",
+      "packages": ["__APP__"]
     }
   },
   "globalStyle": {

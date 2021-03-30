@@ -58,7 +58,7 @@ const useBanners = () => {
   });
 
   const handleClickBanner = (id: number) => {
-    navigateTo("/pages/announcement/index", { id });
+    navigateTo("/pagesA/announcement/index", { id });
   };
 
   return { banners, handleClickBanner };
