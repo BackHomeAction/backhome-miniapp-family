@@ -25,11 +25,11 @@
       <view class="right">
         <view class="name">
           {{ status !== 'unlogin' && name ? name : "家属" }}
-          <view
+          <!-- <view
             v-if="status !== 'unlogin'"
             class="sex-icon"
             :class="[sex === 1 ? 'sex-icon-man' : sex === 2 ? 'sex-icon-woman' : '']"
-          />
+          /> -->
         </view>
         
         <button
