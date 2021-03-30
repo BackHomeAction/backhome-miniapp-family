@@ -56,7 +56,7 @@ export interface Case {
   place?: string; // 位置名
   province?: string; // 省
   startTime?: string; // 案件开始时间
-  state?: number; // 案件状态（1为正在进行，2为已找到，3为已超时,4为已取消）
+  state?: number; // 案件状态（1为正在进行，2为已找到，3为已归档,4为已取消）
   volunteerCase?: VolunteerCase; // 志愿者-案件信息
 }
 export interface ConfirmResult {
