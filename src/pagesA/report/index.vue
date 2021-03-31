@@ -61,6 +61,7 @@
               :photos="form.identificationPhoto ? [form.identificationPhoto] : []"
               :max-upload="1"
               label="请在此处添加证件照"
+              check-validity
               @change="handleIdPhotoUploaded"
             />
             <old-man-photo-uploader
@@ -206,6 +207,7 @@ interface INewOldmanForm {
   sex: number;
   birthDate: string;
   identificationPhoto: string;
+  phone?: string;
 }
 
 const form: IForm = reactive({
@@ -428,6 +430,9 @@ const handleSubmit = async () => {
         birthDate: form.birthday,
         identificationPhoto: form.identificationPhoto,
       };
+      if (store.getters.userInfo.phone) {
+        newOldmanForm.phone = store.getters.userInfo.phone;
+      }
       const res = await requestAddOldMan(newOldmanForm);
       console.log(res);
       const oldmanId = res.data.data?.id;
