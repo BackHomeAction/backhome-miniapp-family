@@ -101,7 +101,7 @@ const useHistory = () => {
   const store = useStore();
 
   const historyMissions: ComputedRef<Array<Case>> = computed(() => {
-    return store.getters.myAllMissions.reverse();
+    return store.getters.myAllMissions;
   });
 
   const doingMissions = computed(() => {
