@@ -148,6 +148,9 @@ const featureText = computed(() => {
   if (caseInfo.value?.oldMan?.others) {
     text += `${caseInfo.value?.oldMan?.others}，`;
   }
+  if (caseInfo.value?.others) {
+    text += `${caseInfo.value?.others}，`;
+  }
 
   if (text == "") return "暂无";
 
