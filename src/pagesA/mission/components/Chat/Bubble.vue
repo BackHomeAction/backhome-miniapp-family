@@ -1,4 +1,3 @@
-<!-- TODO: 还须处理系统消息、管理员消息、家属消息 -->
 <template>
   <view
     v-if="data"
@@ -34,7 +33,7 @@
           管理员
         </view>
         <view class="info-name">
-          {{ data.flow === 'out' ? '我' : data.nick }}
+          {{ data.flow === 'out' ? '我' : (data.nick || '') }}
         </view>
       </view>
       <view>
@@ -117,6 +116,12 @@ export default defineComponent({
       if (role === 2) {
         return store.getters.userInfo.avatarUrl;
       }
+
+      if (props.data.avatar) {
+        return props.data.avatar;
+      }
+
+      return "/static/images/icon/user.png";
     };
 
     // 获取用户信息
