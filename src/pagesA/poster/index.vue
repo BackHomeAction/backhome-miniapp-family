@@ -291,7 +291,7 @@ const usePoster = () => {
             {
               width: "380px",
               maxLines: 3,
-              top: ["580px", "text-offenplace"],
+              top: ["620px", "text-offenplace"],
               left: "80px",
               fontSize: "24px",
               lineHeight: "28.8px",
@@ -354,8 +354,7 @@ const usePosterSmall = () => {
         // 模板
         {
           type: "image",
-          url:
-            "https://fwwb2020-common.tgucsdn.com/images/poster/template-small.jpg",
+          url: "https://fwwb2020-common.tgucsdn.com/images/poster/template-small.jpg",
           css: {
             width: "500px",
             height: "400px",
