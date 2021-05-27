@@ -13,13 +13,14 @@ class UniWebSocket {
     this.messageListener = [];
 
     // 创建连接
-    uni.connectSocket({
+    this.socket = uni.connectSocket({
       url: url,
       protocols: protocols,
+      complete: () => {},
     });
 
     // 连接开启
-    uni.onSocketOpen((res) => {
+    this.socket.onOpen((res) => {
       this.onopen(res);
       for (let i in this.openListener) {
         this.openListener[i](res);
@@ -27,7 +28,7 @@ class UniWebSocket {
     });
 
     // 连接关闭
-    uni.onSocketClose((res) => {
+    this.socket.onClose((res) => {
       // 主动关闭连接不进行回调
       if (this.activeClose) {
         this.activeClose = false;
@@ -40,7 +41,7 @@ class UniWebSocket {
     });
 
     // 连接异常
-    uni.onSocketError((res) => {
+    this.socket.onError((res) => {
       this.onerror(res);
       for (let i in this.errorListener) {
         this.errorListener[i](res);
@@ -48,7 +49,7 @@ class UniWebSocket {
     });
 
     // 接收消息
-    uni.onSocketMessage((res) => {
+    this.socket.onMessage((res) => {
       this.onmessage(res);
       for (let i in this.messageListener) {
         this.messageListener[i](res);
@@ -119,7 +120,7 @@ class UniWebSocket {
    */
   send(data) {
     try {
-      uni.sendSocketMessage({
+      this.socket.send({
         data: data,
       });
     } catch (e) {
@@ -135,7 +136,7 @@ class UniWebSocket {
    */
   close() {
     this.activeClose = true;
-    uni.closeSocket();
+    this.socket.close();
   }
 }
 

@@ -60,8 +60,7 @@
         shadow
         :disabled="!isAllowNextStep"
         :loading="isLoading"
-        open-type="getUserInfo"
-        @getuserinfo="handleNextStep"
+        @click="handleNextStep"
       >
         {{ step === 2 ? "确认提交" : "下一步" }}
       </u-button>
@@ -117,7 +116,7 @@ const useProfileVerify = () => {
     district: undefined,
   });
 
-  const verifyProfile = async (userInfo: UniApp.GetUserInfoRes) => {
+  const verifyProfile = async (userInfo: any) => {
     await requestUpdateInformation(profileForm);
     await requestUpdateWechatUserInfo({
       encryptedData: userInfo.encryptedData,
@@ -166,8 +165,10 @@ export default defineComponent({
     const profileVerify = useProfileVerify();
     const isLoading = ref(false);
 
-    const handleNextStep = async (userInfoRes: any) => {
-      const userInfo: UniApp.GetUserInfoRes = userInfoRes.detail;
+    const handleNextStep = async () => {
+      const userInfo = await wx.getUserProfile({
+        desc: "获取您的用户名和头像",
+      });
 
       isLoading.value = true;
       if (step.value === 1) {

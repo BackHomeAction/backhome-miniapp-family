@@ -214,8 +214,10 @@ const form: IForm = reactive({
   name: "",
   identificationPhoto: "",
   lifePhoto: [],
-  sex: 0,
-  birthday: "",
+  sex: 1,
+  birthday: dayjs()
+    .year(dayjs().year() - 90)
+    .format("YYYY-MM-DD"),
   lostTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   lostPlace: null,
   others: "",
