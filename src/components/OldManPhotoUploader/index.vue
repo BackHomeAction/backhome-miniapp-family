@@ -67,7 +67,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ["change"],
+  emits: ["change", "faceInfo"],
   setup(props, { emit }) {
     const handleAddPhoto = async () => {
       uni.chooseImage({
@@ -82,11 +82,12 @@ export default defineComponent({
                 const { data } = await requestCheckFaceValidity({
                   imgUrl: url,
                 });
-                if (!data) {
+                if (!data || !data.data.isOldMan) {
                   showModalError("请上传有效的老人照片");
                   hideLoading();
                   return;
                 }
+                emit("faceInfo", data.data);
               } catch (e) {
                 console.log(e);
                 hideLoading();

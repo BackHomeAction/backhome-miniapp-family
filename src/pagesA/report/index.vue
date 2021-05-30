@@ -63,6 +63,7 @@
               label="请在此处添加证件照"
               check-validity
               @change="handleIdPhotoUploaded"
+              @faceInfo="handleDetectedFaceInfo"
             />
             <old-man-photo-uploader
               :photos="form.lifePhoto"
@@ -214,10 +215,8 @@ const form: IForm = reactive({
   name: "",
   identificationPhoto: "",
   lifePhoto: [],
-  sex: 1,
-  birthday: dayjs()
-    .year(dayjs().year() - 90)
-    .format("YYYY-MM-DD"),
+  sex: 0,
+  birthday: "",
   lostTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   lostPlace: null,
   others: "",
@@ -319,7 +318,24 @@ const usePhotoUploader = () => {
     form.lifePhoto = photoList;
   };
 
-  return { handleIdPhotoUploaded, handleLifePhotoUploaded };
+  const handleDetectedFaceInfo = (data: {
+    isOldMan: boolean;
+    sex: 1 | 2;
+    age: number;
+  }) => {
+    console.log(data);
+    form.sex = data.sex;
+    form.birthday = dayjs()
+      .year(dayjs().year() - data.age)
+      .format("YYYY-MM-DD");
+    showToast("自动识别成功", "success");
+  };
+
+  return {
+    handleIdPhotoUploaded,
+    handleLifePhotoUploaded,
+    handleDetectedFaceInfo,
+  };
 };
 
 const useReportType = () => {

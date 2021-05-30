@@ -120,7 +120,7 @@ export const requestCreateNewCase = (params: Case) => {
  * @return {*}
  */
 export const requestCheckFaceValidity = (params: { imgUrl: string }) => {
-  return http.request<ResponseData<boolean>>({
+  return http.request<ResponseData<any>>({
     url: `face/isOldMan`,
     method: "POST",
     params: {},
