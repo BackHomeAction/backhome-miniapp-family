@@ -209,6 +209,7 @@ interface INewOldmanForm {
   birthDate: string;
   identificationPhoto: string;
   phone?: string;
+  offerPlace: string;
 }
 
 const form: IForm = reactive({
@@ -447,6 +448,7 @@ const handleSubmit = async () => {
         sex: form.sex,
         birthDate: form.birthday,
         identificationPhoto: form.identificationPhoto,
+        offerPlace: "[]",
       };
       if (store.getters.userInfo.phone) {
         newOldmanForm.phone = store.getters.userInfo.phone;

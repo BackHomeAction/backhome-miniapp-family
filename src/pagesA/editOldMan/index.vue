@@ -445,10 +445,9 @@ const handleSubmit = async () => {
       const currentMissionOldManID =
         store.getters.currentMission?.missionInfo?.oldMan?.id;
       if (currentMissionOldManID && currentMissionOldManID === oldmanId.value) {
-        store.dispatch(
-          ActionTypes.initCurrentMission,
-          store.getters.currentMission.missionInfo.id
-        );
+        store.dispatch(ActionTypes.initCurrentMission, {
+          id: store.getters.currentMission.missionInfo.id,
+        });
       }
     } else {
       await requestAddOldMan(postForm);
@@ -543,13 +542,13 @@ export default defineComponent({
       form.city = oldman.city;
       form.district = oldman.district;
       form.address = oldman.address;
-      form.offenPlaces = JSON.parse(oldman.offerPlace);
+      form.offenPlaces = JSON.parse(oldman.offerPlace) || [];
       form.senileDementia = oldman.senileDementia;
       form.disability = oldman.disability;
       form.otherFeature = oldman.otherFeature;
       form.others = oldman.others;
       form.identificationPhoto = oldman.identificationPhoto;
-      form.lifePhoto = JSON.parse(oldman.lifePhoto);
+      form.lifePhoto = JSON.parse(oldman.lifePhoto) || [];
     } else {
       // new
       oldmanId.value = 0;
